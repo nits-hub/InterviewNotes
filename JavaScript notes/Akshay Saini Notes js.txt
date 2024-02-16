@@ -1,0 +1,28 @@
+Lec - 1 How JS works:
+
+    Index: (1) is JS Synchronous or Asynchronous?
+           (2) is JS single threaded or multi-threaded?
+    
+    1. Everything in JS happens inside an execution context.
+       Execution context is made up of two components i.e., memory component and 
+       a) Memory component -  also known as variable environment, here, variable and functions are stored as the (key:value) pair. like a:10, fn:{...}
+       b) Code component - also knows as thread of execution, is just like a thread in which the whole code is executed one line at a time.
+
+            
+            
+            Execution context
+-----------------------------------------
+|Memory component   | code component    |
+-----------------------------------------
+| a: 10              | code line 1      |
+| fn: {...}          | code line 2      |
+|                    | code line 3      |
+-----------------------------------------
+
+
+    2. Javascript is a Synchronous single-threaded language i.e., JS can execute one line at a time with the 
+       Synchronous(when one task is executed the execution of another task will not begin until the execution of first task is not finished) feature.
+     
+Lec - 2 How JS code is executed:
+
+    

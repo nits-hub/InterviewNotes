@@ -1,0 +1,103 @@
+Core Java Interview Notes:
+
+What is java?
+=> Java is a high-level, object-oriented programming language known for its portability, security, and versatility. It was developed by Sun Microsystems in the mid-1990s and has since become widely used for developing a variety of applications, including web applications, mobile apps, enterprise software, and more.
+
+"WORA" concept in java?
+=> Java is introduced in the market with the slogan "WORA" which means the source code is not converted to code directly understood by Hardware, rather it is converted to bytecode(.class file), which is interpreted by JVM, so once compiled it generates bytecode file, which can be run anywhere (any machine) which has JVM( Java Virtual Machine) and hence it gets the nature of Write Once and Run Anywhere. 
+
+Difference between JDK and JRE?
+=> The JDK and the JRE are both essential components in the Java ecosystem, but they serve different purposes:
+
+JDK (Java Development Kit):
+
+1. The JDK is a full-featured software development kit for Java.
+2. It contains everything needed to develop Java applications, including tools like the Java compiler (javac), Java Virtual Machine (JVM), and various development libraries and APIs.
+3. Developers use the JDK to write, compile, debug, and deploy Java applications.
+
+JRE (Java Runtime Environment):
+
+1. The JRE is a subset of the JDK.
+2. It includes the Java Virtual Machine (JVM), class libraries, and other supporting files necessary to run Java applications.
+3. The JRE is intended for users who want to run Java applications on their systems but do not need the development tools included in the JDK.
+
+In summary, if you're a developer creating Java applications, you'll typically need the JDK to write, compile, and debug your code. On the other hand, if you only intend to run Java applications without needing to develop or compile new ones, you can install the JRE, which includes the necessary components to execute Java programs.
+
+What is JIT Compiler?
+=> JIT (Just-In-Time) compilation is a technique used by Java, to improve the performance of executing code.
+
+JVM uses an interpreter to translate bytecode into machine code instructions so that the hardware can execute. This interpretation process can be slower compared to executing native machine code.
+
+To enhance performance, the JVM employs the JIT compiler. The JIT compiler works by dynamically analyzing the bytecode as the program runs. It identifies parts of the code that are frequently executed, known as "hot spots." Instead of interpreting these hot spots repeatedly, the JIT compiler optimizes them by generating native machine code specifically tailored to the underlying hardware architecture. This optimized native code is then used for subsequent executions of the hot spots.
+
+What is JAVA VIRTUAL MACHINE(JVM)
+=> JVM is a crucial component of the Java platform, that provides the runtime environment for Java bytecode to be executed.
+
+Bytecode Execution: When Java source code is compiled, it's translated into platform-independent bytecode. This bytecode is not machine code but rather an intermediate format that the JVM understands.
+*************************
+
+what are the access modifiers in java and what do they mean
+=> In Java, access modifiers are keywords that define the accessibility or visibility of classes, variables, methods, and constructors within a program. There are four main access modifiers in Java:
+
+1. public: Elements marked as public can be accessed from anywhere within the same package or from outside the package.
+
+2. protected: Accessible within the same package and  outside the package using subclasses.
+
+3. default: It is the by-default access modifier. Elements without an explicit access modifier are accessible only within the same package.
+
+4. private: The most restrictive modifier. Elements marked as private are accessible only within the same class. They cannot be accessed from outside the class, including subclasses.
+
+
+what are the different types of loops in java.
+
+EXPLAIN OOPS CONCEPT:
+=> Object Oriented programming is a programming paradigm to design a program using classes and objects. It simplifies the software development and maintenance process by providing some concepts defined below:
+
+1.Object/class
+2.Abstraction
+3.Encapsulation
+4.polymorphism
+5.Inheritance
+
+1.Object/class: According to OOPs concepts, everything that exists in the real world is an object. Object can be anything that has some properties and behaviour.
+Properties are called as variable and behaviour are called as methods.
+
+What is Class in Java and How do you define one?
+In Java, a class is a blueprint or template that defines the properties and behavior of objects. It encapsulates data and methods that operate on that data. Objects are instances of classes; they represent real-world entities and have characteristics (attributes/properties) and behaviors (actions/methods).
+
+How do you create an object in java?
+In Java, creating an object involves using the new keyword along with the constructor of a class. 
+e.g.,
+
+What is 'this' keyword in java?
+=> The this keyword in Java is used to refer to the current object within a method or constructor.
+
+1. Reference to the Current Object:
+ It's used to access instance variables and methods of the current object when there might be a naming conflict between local variables and instance variables.
+***************************
+
+
+What are contructors, and what is their role in Java classes? Explain with example types of constructor also?
+=> copy
+Types of constructor are:
+1.Non-parameterized constructor or Default constructor
+2. Parameterized constructor
+3. copy constructor: is an overloaded constructor, which is used to declare and intitialize an object from another object.
+
+
+
+why do you need default constructor in java classes?
+
+
+what is the difference between method overloading and method overriding?
+what is the difference between static and non-static (instance) variables/methods?
+Explain the equals() and hash/Code() methods in java.
+Explain the difference between equals() method and "==" operator methods in java.
+
+
+How do you handle exceptions in java?
+What is the try-catch-finally block in java
+
+
+
+
