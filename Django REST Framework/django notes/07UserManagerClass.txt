@@ -1,0 +1,124 @@
+============== UserManager Class ==============
+
+1. UserManager Class:
+    Type - Subclass of BaseUserManager.
+    Purpose - Provides custom methods for creating and managing users.
+
+    Methods - 
+    
+    1. _create_user 
+        -> Core method for creating users.
+        -> Validates the email and sets fields like is_staff, is_superuser, etc.
+        -> Saves the user using the database connection (self._db). 
+    
+    2. create_user
+        -> Creates a standard user with default is_staff=False and is_superuser=False.
+
+    3. create_staff_user
+        -> Creates a staff user with is_staff=True and is_superuser=False.
+
+    4. create_superuser
+        -> Creates a superuser with is_staff=True and is_superuser=True.
+
+2. BaseUserManager
+    Purpose: 
+        1. BaseUserManager is a base class for creating custom user model managers.
+        2. It is used when you create a custom user model and want to define how users are created, particularly when overriding the default behavior or create_user and create_superuser.
+        
+    Key features:
+        1. Handles user creation logic.
+        2. Ensures seperation of user creation responsibilities from the user model itself.
+    
+    Methods to override:
+        1. create_user - A method to create regular users. It ensures is_staff and is_superuser are set to False.
+
+        2. create_superuser - A method to create superuser. It ensures is_staff and is_superuser are set to True.
+
+        3. create_staff_user - 
+
+        e.g., 
+            class UserManager(BaseUserManager):
+            def create_user(self, email, password=None, **extra_fields):
+                if not email:
+                    raise ValueError("The Email field must be set")
+                email = self.normalize_email(email)  # Normalizes email domain (e.g., lowercase)
+                user = self.model(email=email, **extra_fields)
+                user.set_password(password)  # Hashes the password
+                user.save(using=self._db)  # Saves the user to the database
+                return user
+
+            def create_superuser(self, email, password=None, **extra_fields):
+                extra_fields.setdefault('is_staff', True)
+                extra_fields.setdefault('is_superuser', True)
+
+                if not extra_fields.get('is_staff'):
+                    raise ValueError('Superuser must have is_staff=True.')
+                if not extra_fields.get('is_superuser'):
+                    raise ValueError('Superuser must have is_superuser=True.')
+
+                return self.create_user(email, password, **extra_fields)
+
+3. AbstractBaseUser -  
+    Purpose - 
+        1. AbstractBaseUser is a base class provided by Django for creating a fully customized user model. 
+
+        2. It contains the core implementation of a user object but omits fields like username or email, leaving you to define them.
+
+    Key features - 
+
+        1. Provides methods for password management (set_password, check_password).
+        2. Includes fields for tracking authentication (e.g., last_login).
+        3. Does not include fields like username, email, or is_active —you define these in your custom model.
+
+    Why use AbstractBaseUser?
+        1. To define your custom user fields (e.g., using email instead of username for authentication)
+
+        To avoid unwanted fields from Django's built-in User model.
+
+    e.g., 
+        class User(AbstractBaseUser):
+            email = models.EmailField(unique=True)
+            name = models.CharField(max_length=100)
+            is_active = models.BooleanField(default=True)
+            is_staff = models.BooleanField(default=False)
+
+            USERNAME_FIELD = 'email'  # Field used for authentication
+            REQUIRED_FIELDS = ['name']  # Fields required when creating superusers
+
+            objects = UserManager()  # Attach the custom manager
+
+            def __str__(self):
+                return self.email
+    
+3. PermisssionsMixin - 
+    purpose: 
+        1. PermissionsMixin is a mixin (a class used to add specific functionality) that provides fields and methods for handling user permissions.
+
+    Key features: 
+        1. Adds fields like groups and user_permissions for role-based access control.
+        
+        2. Includes the is_superuser field and methods like has_perm and has_module_perms to manage user permissions.
+        
+        3. Simplifies permission management when creating custom user models.
+
+    Example fields/methods from PermissionsMixin:
+        1. Fields:
+            1. is_superuser: Boolean field indicating if the user has all permissions.
+
+            2. groups: Many-to-Many field for assigning the user to permission groups.
+
+            3. user_permissions: Many-to-Many field for direct user permissions.
+
+        2. Methods: 
+            1. has_perm(perm, obj=None): Checks if the user has a specific permission.
+
+            2. has_module_perms(app_label): Checks if the user has permissions for a specific app
+        
+        
+
+
+    
+    
+        
+
+

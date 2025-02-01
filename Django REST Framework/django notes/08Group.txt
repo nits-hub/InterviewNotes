@@ -1,0 +1,165 @@
+=============== GROUP ===============
+
+In DRF, groups typically refer to the Group model provided by Django's authentication system, which is part of django.contrib.auth. Groups are a way to organize and manage user permissions collectively.
+
+1. Understanding Groups in Django 
+    a. A group is a collection of permissions.
+    b. You can assign users to a group, and all the users in the group inherit the permissions associated with that group.
+    c. Group simplify permission management by allowing you to apply permissions to multiple users at once, instead of managing permissions individually for each user.
+    c. The group model is defined in Django's auth module.
+        from django.contrib.auth.models import Group 
+
+2. Using Groups in Django REST Framework
+    a. Creating Groups - You can create groups either through the Django admin interface or programmatically:
+
+    e.g., 
+        from django.contrib.auth.models import Group, Permission
+
+        # Create a new group
+        group = Group.objects.create(name='Editors')
+
+        # Assign permissions to the group
+        permission = Permission.objects.get(codename='change_post')
+        group.permissions.add(permission)
+
+3. Assigning Users to Groups - 
+    Users can be added to a group, and they will automatically inherit the group’s permissions.
+
+    e.g.,
+        from django.contrib.auth.models import User
+
+        # Add a user to the group
+        user = User.objects.get(username='johndoe')
+        group.user_set.add(user)
+
+4. Checking group membership
+    You can check whether a user belongs to a group:
+    e.g.,
+        if user.groups.filter(name='Editors').exists():
+        print("User is in the Editors group.")
+
+5. Groups in DRF APIs
+    Serializing Groups - 
+        You can expose groups through your DRF API using serializers.
+
+    e.g.,
+        from django.contrib.auth.models import Group
+        from rest_framework import serializers
+
+        class GroupSerializer(serializers.ModelSerializer):
+            class Meta:
+                model = Group
+                fields = ['id', 'name', 'permissions']
+    
+    Viewsets for Groups - 
+        To create endpoints for managing groups:
+        
+        e.g.,
+            from django.contrib.auth.models import Group
+            from rest_framework import viewsets
+            from .serializers import GroupSerializer
+
+            class GroupViewSet(viewsets.ModelViewSet):
+                queryset = Group.objects.all()
+                serializer_class = GroupSerializer
+
+6. Extending Group Functionality
+    If you need custom functionality, you can extend the Group model using Django's AbstractBaseUser and PermissionsMixin.
+
+    Adding description to groups:
+
+    e.g.,
+        from django.contrib.auth.models import Group
+        from django.db import models
+
+        class CustomGroup(Group):
+            description = models.TextField(blank=True, null=True)
+
+7. Codename ?
+    a. In Django, a codename is a unique identifier used for permissions in the auth_permission table.
+    b. It is a string that combines the action (e.g., add, change, delete, view) and the model name, which together describes what kind of permission is being granted.
+
+    Purpose of Codenames:
+        a. Codenames are part of Django's built-in permission system, which allow you to control access to models and their actions.
+        b. These permissions are automatically created for every model when you run migrations, unless explicitly disabled.
+
+    Structure of a Codename:
+        A codename follows this pattern:
+            <action>_<modelname>
+
+            where, 
+                <action> - One of the default action django provides: 
+                add, change, delete, view - Permissions to add/change/delete/view in the model.
+
+                <modelname> - The name of the model in lowercase.
+
+        Example:
+            Consider a model named Order in an app named sales:
+            
+            e.g.,
+                class Order(models.Model):
+                    name = models.CharField(max_length=255)
+                    created_at = models.DateTimeField(auto_now_add=True)
+
+            When you run python manage.py makemigrations and python manage.py migrate, Django creates these permissions automatically:
+            
+                Codename	    Permission Description
+                add_order	    Can add order
+                change_order	Can change order
+                delete_order	Can delete order
+                view_order	    Can view order
+
+    How codenames are Stored:
+        Codenames are stored in auth_permission table, which is part of Django's built-in authentication system. Each permission record is associated with:
+        1. A name: A human-readable description (e.g., "Can add order")
+        2. A codename: The unique string identifier (e.g., add_order).
+        3. A content_type: The model permission applies to.
+
+    
+    How codenames are used:
+        1. Assign permissions to users/ groups: 
+            Use permission objects with codenames to grant specific actions on a model.
+        
+        e.g.,
+            from django.contrib.auth.models import Permission
+
+            # Grant "add_order" permission to a user
+            permission = Permission.objects.get(codename="add_order")
+            user.user_permissions.add(permission)
+
+
+        2. Check Permissions in Views:
+            Use has_perm to verify if a user has a specific permission.
+            e.g.,
+                if request.user.has_perm('sales.add_order'):
+                print("User can add orders!")
+
+        3. Filter Permissions dynamically:
+            Query permissions by codename using Django ORM:
+
+            e.g.,
+                from django.contrib.auth.models import Permission
+
+                # Fetch all permissions ending with "_order"
+                permissions = Permission.objects.filter(codename__endswith="_order")
+                for perm in permissions:
+                    print(perm.codename, perm.name)
+
+
+
+
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+
+

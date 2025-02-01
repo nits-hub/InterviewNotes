@@ -1,0 +1,56 @@
+Day - 2 -> Control Flow and Conditionals
+
+Conditional statements
+    Conditional statements are used to perform different actions based on different conditions. 
+    The most common conditional statements in JavaScript are:
+
+        1. if statements - The if statement executes a block of code if a specified condition evaluates to true.
+        2. if-else statements - else part will execute if the if condition evaluates to false.
+        3. if else-if else statements - You can use else if to check for multiple conditions. If none of the if or else if conditions evaluate to true, the else block is executed.
+        4. switch-case-default - 
+
+Loops 
+    Loops are used to execute a block of code repeatedly, based on a condition.
+
+    Types of loops - 
+        1. for loop - executes a block of code specified number of times.
+        2. while loop - executes a block of code while the specified condition is not satisfied.
+        3. do while loop - similar to while loop, but the block of code is executed once until the condition is tested.
+        4. for...in loop - is used to Iterates over the properties of an object.
+        5. for...of loop - is used to iterate over iterable objects such as arrays, strings, and sets.
+
+
+        e.g., for...in loop
+
+            syntax: 
+                for (let key in object) {
+                    // Code to execute for each property
+                }
+
+            code:
+                const person = {name: 'Alice', age: 25, city: 'New York'};
+
+                for (let key in person) {
+                    console.log(key + ": " + person[key]);
+                }
+                // Outputs: 
+                // name: Alice
+                // age: 25
+                // city: New York
+        
+
+        e.g., for...of loop
+
+            syntax: 
+                for (let element of iterable) {
+                    // Code to execute for each element
+                }
+
+            code:
+                const fruits = ['apple', 'banana', 'cherry'];
+                for (let fruit of fruits) {
+                    console.log(fruit);
+                }
+                // Outputs: apple banana cherry
+
+

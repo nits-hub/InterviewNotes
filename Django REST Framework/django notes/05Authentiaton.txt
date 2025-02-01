@@ -1,0 +1,100 @@
+AUTHENTICATION - 
+    a. authentication is the process of identifying the user who is making a request to the API. 
+    b. DRF provides various authentication methods to ensure that users are who they say they are before they can access certain resources.
+
+    Key Concepts - 
+    1. Authentication vs. Authorization - 
+        a. Authentication is the process of identifying a user (verifying the identity).
+        b. Authorization is the process of determining what an authenticated user is allowed to do(e.g., accessing specific resources)
+
+    Note - 
+        1. DRF focuses primarily on authentication, though it can integrate with other mechanisms (like permissions) to handle authorization.
+
+    Authentication Mechanish in DRF - 
+        DRF supports several types of authentication. Some of the common ones are:
+
+    1. Session Authentication - 
+        a. Mechanism - 
+            1. This is the default authentication method for DRF. 
+            2. It relies on Django’s standard session framework to authenticate users.
+            3. When a user logs in via Django’s built-in LoginView, a session cookie is created, which is sent with each subsequent request.
+
+        b. How it works - 
+            The session ID is stored in a cookie on the client-side (typically csrftoken), and this ID is sent with each HTTP request. 
+            DRF checks this session ID to identify the user.
+        
+        c. Use cases - 
+            1. Useful when your frontend is a Django-based web app or a traditional web application.
+            2. When you want to rely on Django’s session-based authentication mechanism, which provides a server-side mechanism for maintaining user sessions.
+
+    2. Basic Authentication - 
+        a. Mechanism: 
+            1. The client sends the username and password in the Authorization header of the request using the Basic authentication scheme. 
+            2. The credentials are base64-encoded.
+
+        b. How it Works: 
+            When a request with the Authorization header is received, DRF decodes the credentials and verifies them against the user database.
+
+        c. Use Cases:
+            Ideal for simple use cases or testing purposes.
+            Not recommended for production in most cases, because it sends the credentials in every request (albeit base64-encoded, which is not secure without HTTPS).
+            
+            Example of the Authorization header:
+                Authorization: Basic base64encode(username:password)
+
+    3. Token Authentication -
+        a. Mechanism: 
+            1. In this method, a user provides an authentication token in the Authorization header of the request. 
+            2. The token is typically a JWT (JSON Web Token) or a custom token issued by the server.
+
+        b. How it works:
+            he token can be issued after a successful login, and the user must send this token in the header of each request to authenticate.
+
+        c. Use cases:
+            1. Commonly used in stateless applications or APIs where the client is separate from the server (e.g., mobile apps, single-page applications).
+            2. Used for services that need to support authentication across multiple platforms (e.g., API gateways, third-party apps).
+            3. Stateless authentication, meaning the server doesn’t store session data, making it scalable for large-scale applications.
+
+        Example of Authorization header:
+            Authorization: Token <token_value>
+
+    4. JWT-Authentication - 
+        a. Mechanism:
+            1. JWT is a compact, URL-safe means of representing claims to be transferred between two parties. 
+            2. The token contains a payload (e.g., user ID, roles, permissions) and a signature to ensure integrity.
+        
+        b. How it Works:
+            After the user successfully logs in, a JWT is issued, and the user must send the token in the Authorization header in subsequent requests.
+        
+        c. Use Cases:
+            1. Ideal for single-page applications (SPA), mobile apps, or any application requiring stateless authentication.
+            2. Common for modern microservices-based architectures where each service may authenticate a user independently.
+            3. Useful for applications needing user information and claims (e.g., role or permissions) to be embedded within the token.
+
+        Example
+            Example of the Authorization header:
+                Authorization: Bearer <JWT_token>
+    
+    5. OAuth 2.O Authentication - 
+        a. Mechanism:
+            1. OAuth 2.0 is an open standard for access delegation, commonly used for token-based authentication and authorization. 
+            2. In this system, an authorization server issues access tokens on behalf of the user.
+        
+        b. How it works:
+            1. The user is redirected to an authentication service (e.g., Google, Facebook), where they authenticate. Upon success, an OAuth token is issued and passed to the application, which can then be used to authenticate API requests.
+
+        c. Use Cases:   
+            1. Commonly used for third-party logins (e.g., log in with Google, Facebook, etc.).
+            2. Secure way of authorizing a third-party to access a user's data without sharing credentials (e.g., social login, integration with external APIs).
+            3. Often used in federated authentication systems and microservice architectures.
+        
+        OAuth 2.0 is more complex than other authentication methods but offers robust security for scenarios that involve external parties.
+
+    6. Custom Authentication - 
+        
+
+
+
+    
+
+

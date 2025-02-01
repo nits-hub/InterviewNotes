@@ -1,0 +1,23 @@
+    If do not have virtual env install on system - 
+        -> pip install virtualenv
+
+open the directory of your project, then - create venv
+-> python -m venv myenv
+
+activate the virtual environment
+-> myenv\Scripts\activate
+
+    Upgrade pip in the virtual environment - to ensure you have the latest version of pip 
+        -> pip install --upgrade pip 
+
+Install Django and Django REST Framework 
+pip install django 
+pip install djangorestframework 
+
+-----------------------
+To view the list of installed packages 
+-> pip freeze
+
+
+
+

@@ -1,0 +1,214 @@
+Python Collections (Arrays)
+There are four collection data types in the Python programming language:
+
+*- List is a collection which is ordered and changeable. Allows duplicate members.
+*- Tuple is a collection which is ordered and unchangeable. Allows duplicate members.
+*- Set is a collection which is unordered, unchangeable*, and unindexed. No duplicate members. (*unchageable - but add/remove is allowed)
+Dictionary is a collection which is ordered** and changeable. No duplicate members.
+
+*Set items are unchangeable, but you can remove and/or add items whenever you like.
+**As of Python version 3.7, dictionaries are ordered. In Python 3.6 and earlier, dictionaries are unordered.
+
+    ordered - 
+        -> It means that the items have a defined order, and that order will not change.
+        -> If you add new items to a list, the new items will be placed at the end of the list.
+    
+    changeable - meaning
+        -> we can change, add, and remove items in a list after it has been created.
+    
+    Allow duplicates - 
+        -> Since lists are indexed, lists can have items with the same value:
+-------------------------------------------------------------------------------------------------
+
+1. List - 
+    -> List is used to store multiple items in a single variable.
+    -> List are created using square brackets:
+    -> List can contain items of different data types.
+    e.g., 
+        thisList = ["apple", "banana", "cherry", "apple", "cherry"]
+        print(thisList)
+
+    Note - 
+        * List items are ordered, changeable, and allow duplicates.
+        * List items are indexed, the first item has index [0], and so on...
+
+        Note - 
+            * List can also be created using list() constructor.
+            e.g.,
+                //Note the double round-brackets
+                thislist = list(("apple", "banana", "cherry"))
+                print(thislist)
+
+
+    common list methods:
+    1. count(), append(), insert(), pop(), remove(), reverse(), sort(), clear()
+    2. copy(), extend()
+    3. len()
+
+===================================================================================================
+2. Tuple - 
+    -> Tuples are used to store multiple items in a single variable.
+    -> Tuples are written with round brackets.
+    -> Tuples items are indexed, the first item has index [0], the second item has index [1] etc.
+    -> Tuple can contain elements of different data types.
+
+
+
+    1. To Create tuple with only one item, you have to add a comma after the item, otherwise python will not recognise it as a tuple.
+    e.g., 
+        tuple1 = ("apple",)
+        tuple2 = ("apple")
+        print(type(tuple1)) // tuple
+        print(type(tuple2)) // string
+    
+    2. Tuple can also be created using tuple() constructor
+        e.g., 
+            // note the double round brackets 
+            tuple1 = tuple(("apple", "banana", "cherry"))
+            print(tuple1)
+    
+    Note: 
+        * Tuple is unchageable meaning that you cannot change, add or remove elements once the tuple is created.
+
+        But there is a hack - to modify tuple, first convert the tuple into list perform the modification(add, remove, etc. same as in list) and again the convert the list into tuple.
+
+        ** Add tuple to a tuple - 
+        e.g., 
+            tuple1 = ("a", "b")
+            tuple1 += "c"
+            
+            print(tuple)
+
+        *** del - del keyword is used to completely delete the tuple
+        e.g.,
+            tuple1 = ("a", "b")
+            del tuple1 
+
+            print(tuple1)
+
+    Tuple methods - 
+        1. count() - return the no. of times a specified value occurs in a tuple.
+
+        2. index() - return the index of element found in tuple 
+
+=================================================================================
+3. Set - 
+    -> Set items are unordered, unchangeable*, and do not allow duplicate values.
+    -> Sets are created using curly bracket.
+    -> A set can contain different data types:
+    -> It is also possible to use the set() constructor to make a set.
+
+    Note: 
+        *unchageable - Set items are unchangeable, but you can remove items and add new items.
+
+    Set Methdods - 
+        1. add(), discard(), clear(), copy(), 
+        2. union() or | or update(), intersection() or &, difference() or -, 
+        3. issubset(), issuperset()
+
+        * difference() or - => e.g., a-b means remove b from a 
+        * discard - Remove the specified item
+        
+==================================================================================
+Dictionary - 
+    -> Dictionaries are used to store data values in key:value pairs.
+    -> A dictionary is a collection which is ordered*, changeable and do not allow duplicates.
+
+    e.g., 
+        dict1 = {
+            "brand" : "Ford",
+            "model": "Mustang",
+            "year": 1964,
+        }
+        print(dict1)
+
+    1. access item - dict1["brand"] or dict1.get("brand")
+    2. change values - dict1["brand"] or dict1.update({"year":"2020"})
+    3. add items - dict1["color"] = "red" or dict1.update({"color":"red"})
+    4. remove item - dict1.pop("color") or del dict1["color"]
+
+    
+    * get Keys - keys() method will return a list of all the keys in the dictionary.
+    e.g., 
+        x = dict1.keys()
+        print(x)
+
+    * get values - values() method will return a list of all the values in the dictionary.
+    e.g., 
+        x = thisdict.values()
+
+    
+    Nested Dictionaries - 
+        -> A dictionary can contain dictionaries, this is called nested dictionaries.
+
+        // one way - 
+            myfamily = {
+                "child1": {
+                    'name': 'A',
+                    'year' : 1
+                },
+                "child2": {
+                    'name': 'B',
+                    'year' : '11'
+                },
+                "child3": {
+                    'name': 'C',
+                    'year': '111'
+                },
+            }
+            print(myfamily)
+
+        //second way  - create 3 dictionaries, then create one dictionary that will contain 3 dictionaries
+
+        child1 = {
+            "name": "A",
+            "year": 1
+        }
+
+        child2 = {
+            "name": "B",
+            "year": 1
+        }
+
+        child1 = {
+            "name": "C",
+            "year": 1
+        }
+
+        myfamily = {
+            "child1": child1,
+            "child2": child2,
+            "child3": child3
+        }
+
+        print(myfamily)
+
+        In nested dictionaries:
+            * access items - print(myfamily["child2"]["name"])
+            * loop through nested dictionary using items() - 
+                e.g.,
+                    for x, obj in myfamily.items():
+                        print(x)
+    
+                        for y in obj:
+                            print(y + ':', obj[y])
+
+                
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+
+
+
+    
+    

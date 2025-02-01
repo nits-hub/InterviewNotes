@@ -1,0 +1,244 @@
+==MODEL==
+In Django Rest Framework (DRF), a model represents a table in a database. 
+It is a Python class that inherits from django.db.models.Model and defines the structure of the data you want to store in the database. 
+Each model class corresponds to a single table, and the class attributes represent the columns of that table.
+
+Model Class: 
+1. Model Class: 
+    A Django model is defined as a Python class. 
+    The class name typically represents the entity being modeled (e.g., User, Product, Order). \
+    The model inherits from django.db.models.Model to provide Django's ORM (Object-Relational Mapping) functionality.
+
+    e.g.,
+        from django.db import models
+
+        class Product(models.Model):
+            name = models.CharField(max_length=100)
+            price = models.DecimalField(max_digits=10, decimal_places=2)
+            description = models.TextField()
+            stock_quantity = models.IntegerField()
+            
+            def __str__(self):
+                return self.name
+
+2. Field Types: 
+    Fields in a Django model correspond to the columns of the database table. 
+    Django provides a variety of field types, such as:
+
+    1. CharField: A short text field. Typically used for fields like names or titles.
+    2. IntegerField: An integer field. Used for storing whole numbers.
+    3. DecimalField: A field for fixed-precision decimal numbers. It's commonly used for prices.
+    4. TextField: A long text field, used for large pieces of text (e.g., descriptions).
+    5. DateTimeField: A date and time field.
+    6. BooleanField: A true/false field.
+    7. ForeignKey: A many-to-one relationship field, linking one model to another.
+    8. ManyToManyField: A many-to-many relationship field.
+
+    e.g.,
+        class Order(models.Model):
+            customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
+            product = models.ForeignKey('Product', on_delete=models.CASCADE)
+            quantity = models.IntegerField()
+            total_price = models.DecimalField(max_digits=10, decimal_places=2)
+            order_date = models.DateTimeField(auto_now_add=True)
+
+3. Methods:
+    Django models can have methods that help with specific operations. 
+    For example, you can define a method to calculate the total price of an order or return a string representation of an object.
+
+    1. __str__ method - The __str__ method is often implemented to return a readable string representation of the model instance. This is useful when viewing objects in Django Admin or when working with querysets in the shell.
+
+        e.g.,
+            class Product(models.Model):
+                name = models.CharField(max_length=100)
+                price = models.DecimalField(max_digits=10, decimal_places=2)
+                
+                def __str__(self):
+                    return f"{self.name} - {self.price}"
+
+4. VALIDATIONS - In Django, there are several types of validations that can be implemented in models to ensure the integrity and correctness of the data before it is saved to the database. These validations range from field-specific validations to model-level validations.
+    1. Field-level Validation (Built-in Validators)
+        common Built-in validators:
+        a. max_length and min_length: For CharField, TextField, and SlugField,  the max_length and min_length arguments define the length constraints.
+
+        b. max_value and min_value: For numeric fields like IntegerField,   DecimalField, FloatField, you can define max_value and min_value.
+
+        c. validators: Django allows you to add custom validation functions using the validators parameter on fields.
+
+            e.g., 
+                from django.core.exceptions import ValidationError
+                from django.db import models
+
+                def validate_positive(value):
+                    if value <= 0:
+                        raise ValidationError(f"{value} is not a positive number!")
+
+                class Product(models.Model):
+                    name = models.CharField(max_length=100)
+                    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[validate_positive])
+
+
+    2. Custom Field-Level Validation (clean_<fieldname>)
+        e.g.,
+            class Product(models.Model):
+            name = models.CharField(max_length=100)
+            price = models.DecimalField(max_digits=10, decimal_places=2)
+
+            def clean_name(self):
+                name = self.name
+                if "test" in name.lower():
+                    raise ValidationError("Product name cannot contain the word 'test'.")
+                return name
+
+    3.  Model-level Validation (clean())
+        e.g.,
+               clean() method - is a method that is typically used within Django models and forms to perform custom validation and data cleaning. 
+                        It allows you to define custom validation logic for one or more fields in the model or form before saving or processing the data.
+                        1. In model - clean() method can be triggered manually or when saving the model (depending on whether clean() is called directly or indirectly.
+                        2. In forms - clean() method is part of the form handling and is used for custom validation of form fields or even the entire form. This method is called when the form is validated.
+        e.g., 
+
+        from django.db import models
+        from django.core.exceptions import ValidationError
+
+        class Product(models.Model):
+            name = models.CharField(max_length=100)
+            price = models.DecimalField(max_digits=10, decimal_places=2)
+            stock = models.IntegerField()
+
+            def clean(self):
+                # Custom validation logic
+                if self.price <= 0:
+                    raise ValidationError("Price must be greater than 0.")
+
+                if self.stock < 0:
+                    raise ValidationError("Stock cannot be negative.")
+                
+                # Check if the name contains "test"
+                if "test" in self.name.lower():
+                    raise ValidationError("Product name cannot contain 'test'.")
+
+                # You can also perform cross-field validation
+                if self.price > 10000 and self.stock < 10:
+                    raise ValidationError("High-priced products should have at least 10 in stock.")   
+
+    4. unique=True 
+
+    5. unique=Together, this constraint checks uniqueness for a combination of fields.
+
+    6. signals: you can use this type of validation with the "signal" in django.
+
+    7.  Custom Validation Logic in save() Method - Custom validation logic just before saving the model.
+
+5. Meta Class: 
+    Django models can have a Meta class, which allows for additional configuration. The Meta class can be used to define things like the table name, ordering of records, verbose names, and constraints.
+
+    e.g.,
+        class Product(models.Model):
+            name = models.CharField(max_length=100)
+            price = models.DecimalField(max_digits=10, decimal_places=2)
+
+            class Meta:
+                ordering = ['name']
+                verbose_name = 'Product'
+                verbose_name_plural = 'Products'
+
+    In this example:
+
+        The table will be ordered by name by default.
+        The model will be referred to as "Product" in the singular and "Products" in the plural form.
+
+6. Relationships:
+    Django models support relationships between different tables. These relationships can be:
+
+        1. One-to-Many (ForeignKey): One record in a table can be related to multiple records in another table.
+        e.g., In a blog system, one author can have many blog posts.
+
+        from django.db import models
+
+        class Author(models.Model):
+            name = models.CharField(max_length=100)
+            email = models.EmailField()
+
+            def __str__(self):
+                return self.name
+
+        class BlogPost(models.Model):
+            title = models.CharField(max_length=200)
+            content = models.TextField()
+            author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='blog_posts')
+            created_at = models.DateTimeField(auto_now_add=True)
+
+            def __str__(self):
+                return self.title
+
+        Explanation:
+            1. The BlogPost model has a ForeignKey to the Author model, meaning each blog post is related to one author.
+
+            2. An author can have multiple blog posts, but each blog post belongs to a single author.
+
+        2. Many-to-Many (ManyToManyField): Multiple records in one table can be related to multiple records in another table.
+        e.g., A Student can enroll in multiple Courses, and each Course can have multiple Students.
+
+        class Student(models.Model):
+            name = models.CharField(max_length=100)
+            email = models.EmailField()
+
+            def __str__(self):
+                return self.name
+
+        class Course(models.Model):
+            name = models.CharField(max_length=100)
+            description = models.TextField()
+            students = models.ManyToManyField(Student, related_name='courses')
+
+            def __str__(self):
+                return self.name
+        
+        Explanation:
+            1. The Course model has a ManyToManyField to the Student model, meaning each course can have multiple students, and each student can be enrolled in multiple courses.
+
+            2. The related_name='courses' allows you to access all the courses a student is enrolled in.
+
+            e.g.,
+                # Get all students enrolled in a specific course
+                course = Course.objects.get(id=1)
+                students_in_course = course.students.all()
+
+                # Get all courses a specific student is enrolled in
+                student = Student.objects.get(id=1)
+                enrolled_courses = student.courses.all()
+
+
+        3. One-to-One (OneToOneField): A record in one table is related to only one record in another table.
+        e.g., , a Profile can have a one-to-one relationship with a User, where each User has only one Profile, and each Profile belongs to only one User.
+
+        from django.contrib.auth.models import User
+
+        class Profile(models.Model):
+            user = models.OneToOneField(User, on_delete=models.CASCADE)
+            bio = models.TextField()
+            birthdate = models.DateField()
+
+            def __str__(self):
+                return self.user.username
+
+
+
+7. Migrations - makemigrations
+                migrate 
+8. Admin Integration: Django comes with an admin interface that allows you to manage your models from a web interface. By registering a model with the Django admin site, you can manage the data easily.
+        e.g.,
+            from django.contrib import admin
+            from .models import Product
+
+            admin.site.register(Product)
+
+    This allows you to create, update, and delete Product records through the Django admin interface.
+
+
+
+
+
+
+

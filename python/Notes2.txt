@@ -1,0 +1,79 @@
+# All about strings
+{
+    String - In python, string is sequence of characters that is represented by either single quote or double quote.
+
+    Multiline string declaration - 
+    e.g.,
+        a = """Lorem ipsum dolor sit amet,
+               consectetur adipiscing elit,
+               sed do eiusmod tempor incididunt."""
+
+        print(a)
+
+    Looping through string - 
+    e.g., 
+        for x in "banana":
+            print(x)
+    
+    string library functions - 
+        1. len() - 
+            e.g., 
+                a = "Hello, World!"
+                print(len(a))
+
+        2. in - to check if a certain phrase or character is present in a sting.
+
+            e.g., 
+                a = "Hello, World!"
+                print("World" in a)
+
+                or 
+
+                if "World" in a: 
+                    print("Yes, 'free' is present.")
+
+
+        3. not in - 
+            e.g., 
+
+
+        4. slicing - to return a range of characters or substring.
+            e.g., 
+                b = "Hello, World!"
+                print(b[2:5])
+
+            a. Slice From the Start - 
+                By leaving out the start index, the range will start at the first character:
+
+
+            b. Slice To the End
+                By leaving out the end index, the range will go to the end:
+
+            c. Negative indexing
+                Use negative indexes to start the slice from the end of the string:
+                e.g., 
+                    b = "Hello, World!"
+                    print(b[-5:-2]) //orl
+        5. upper() - to convert the string in uppercase
+        6. lower() - to convert the sting in lowercase
+        7. strip() - works same as trim method
+        8. replace("actual string", "desired string")
+        9. split() - The split() method returns a list where the text between the specified separator becomes the list items.
+        10. Format sting - 
+
+            -> This is invalid syntax in python to format string
+                e.g.,   
+                    age = 36
+                    txt = "My name is John, I am " + age
+                    print(txt)
+            -> The correct way
+
+
+    
+
+
+
+        
+        5.  
+
+}

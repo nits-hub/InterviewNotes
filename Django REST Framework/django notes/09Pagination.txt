@@ -1,0 +1,73 @@
+==================== Pagination ====================
+Pagination is a feature in Django REST Framework (DRF) that allows you to split large querysets into smaller, manageable chunks when returning them in API responses. This is especially useful for improving performance and user experience when dealing with large datasets.
+
+Types of Pagination in DRF - 
+1. PageNumberPagination
+    a. Divides the querysets into pages based on page number (e.g., ?page=1, ?page=2).
+    b. Configurable attributes:
+        1. page_size: Number of items per page.
+        2. page_query_param: Query parameter name for the page number (default is page).
+
+2. LimitOffsetPagination: 
+    a. Provides offset-based pagination using two query parameters: limit and offset.
+    b. Configurable attributes:
+        a. default_limit: Default number of items per page.
+        b. limit_query_param: Query parameter for limit (default is limit).
+        c. offset_query_param: Query parameter for offset (default is offset).
+
+3. CursorPagination: 
+    a. Uses an opaque cursor for pagination instead of a page number of offset.
+    b. Suitable for APIs where data order matters (e.g., timestamps).
+    c. Configurable attributes: 
+        1. page_size: Number of items per page.
+        2. cursor_query_param: Query parameter for the cursor (default is cursor).
+
+
+HOW TO IMPLEMENT PAGINATION IN A DRF PROJECT
+
+1. Configure Global Pagination Settings
+    You can enable pagination globally in your project by adding a configuration in the settings.py file.
+
+    Example using PageNumberPagination:
+    # settings.py
+    REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10,  # Number of items per page
+    }
+
+2. Use Pagination on a specific view:
+    If you want to apply pagination only to specific views, you can explicitly define the pagination class in those views.
+
+    Example using LimitOffsetPagination:
+    from rest_framework.pagination import LimitOffsetPagination
+    from rest_framework.generics import ListAPIView
+    from myapp.models import MyModel
+    from myapp.serializers import MyModelSerializer
+
+    class MyModelListView(ListAPIView):
+        queryset = MyModel.objects.all()
+        serializer_class = MyModelSerializer
+        pagination_class = LimitOffsetPagination  # Specific pagination class
+
+3. Customizing Pagination Classes
+    You can create a custom pagination class by subclassing a DRF pagination class.
+    Example:
+    from rest_framework.pagination import PageNumberPagination
+
+    class CustomPageNumberPagination(PageNumberPagination):
+        page_size = 5  # Default page size
+        page_size_query_param = 'page_size'  # Allow clients to set the page size
+        max_page_size = 100  # Maximum allowed page size
+
+    Use the custom pagination class in a view:
+    from rest_framework.generics import ListAPIView
+    from myapp.models import MyModel
+    from myapp.serializers import MyModelSerializer
+    from myapp.pagination import CustomPageNumberPagination
+
+    class MyModelListView(ListAPIView):
+        queryset = MyModel.objects.all()
+        serializer_class = MyModelSerializer
+        pagination_class = CustomPageNumberPagination
+
+

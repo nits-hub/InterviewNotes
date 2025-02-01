@@ -1,0 +1,55 @@
+DAY - 4 -> DOM Manipulation
+
+What is DOM 
+    The Document Object Model (DOM) is a programming interface for web documents. It represents the structure of a web page as a tree of objects, where each node is an object representing a part of the document, such as elements, attributes, or text content. 
+    
+    JavaScript interacts with the DOM to dynamically update the content, structure, and style of a webpage.
+
+
+Accessing DOM Elements in Javascript.
+    JavaScript provides several methods to access and manipulate DOM elements:
+
+    1. document.getElementById() - This method return an element by its ID.
+        e.g., 
+            let heading = document.getElementById("myHeading");
+            console.log(heading.innerHTML);  // Outputs the content of the element with ID 'myHeading'
+
+    2. document.getElementsByClassName() -  This method returns all elements with the specified class name as an array-like object.
+        e.g., 
+            let paragraphs = document.getElementsByClassName("myClass");
+            console.log(paragraphs[0].innerHTML);  // Access the first element with the class 'myClass'
+    
+    3. document.getElementsByTagName() - This method returns all elements with the specified tag name.
+        e.g., 
+            let divs = document.getElementsByTagName("div");
+
+    4. document.querySelector() This method returns the first element that matches a CSS selector.
+        e.g., 
+            let firstDiv = document.querySelector("div");
+            let specificElement = document.querySelector(".myClass");  // Selects an element with the class 'myClass'
+
+    5. document.querySelectorAll() This method returns all elements that match a CSS selector as a NodeList.
+        e.g., 
+            let allDivs = document.querySelectorAll("div");
+
+
+Modifying DOM Elements in Javascript 
+Once you access a DOM eleement, you can modify it using javascript.
+
+1. Changing the content: You can modify the content of an element using the innerHTML property.
+    e.g., 
+        let heading = document.getElementById("myHeading");
+        heading.innerHTML = "New Heading!";
+
+2. Changing the attributes: You can change an element's attributes like src, href, id, or class.
+    e.g., 
+        let image = document.getElementById("myImage");
+        image.src = "new-image.jpg";  // Changes the image source
+
+3. Changing the style: You can change an element's CSS using the style property.
+    e.g., 
+        let paragraph = document.getElementById("myParagraph");
+        paragraph.style.color = "blue";  // Changes the text color to blue
+
+
+

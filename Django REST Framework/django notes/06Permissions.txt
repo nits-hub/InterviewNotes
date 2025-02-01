@@ -1,0 +1,153 @@
+Permissions in Django REST Framework(DRF)
+    1. Permissions in DRF are a way to control access to your API endpoints, based on conditions such as user authentication, roles, or custom rules.
+    2. They act as gatekeepers and ensure that only authorized users can access specific API endpoints.
+
+Key concepts of permissions in DRF
+1. Global Permissions - 
+    Applied globally to all views in your application using the DEFAULT_PERMISSION_CLASSES setting in your settings file.
+
+2. View Level Permissions  -
+    Applied at the view level by setting the permission_classes attribute in the specific view.
+
+3. Custom Permissions - 
+    Custom logic can be implemented by creating custom permission classes.
+
+Types of Permissions in DRF
+1. AllowAny - 
+    Grants unrestricted access to all users.
+    Use it for public endpoints.
+    e.g., 
+        from rest_framework.permissions import AllowAny
+
+        class PublicView(APIView):
+            permission_classes = [AllowAny]
+
+            def get(self, request):
+                return Response({"message": "Accessible to everyone"})
+
+2. IsAuthenticated - 
+    Only grants access to authenticated users.
+    Denies access to unauthenticated users (401 Unauthorized).
+    e.g., 
+        from rest_framework.permissions import IsAuthenticated
+
+        class PrivateView(APIView):
+            permission_classes = [IsAuthenticated]
+
+            def get(self, request):
+                return Response({"message": "Accessible to authenticated users"})
+
+3. IsAdminUser - 
+    Only grants accesss to users with is_staff=True 
+    e.g.,
+        from rest_framework.permissions import IsAdminUser
+
+        class AdminOnlyView(APIView):
+            permission_classes = [IsAdminUser]
+
+            def get(self, request):
+                return Response({"message": "Accessible to admin users"})
+
+4. IsAuthenticatedOrReadOnly
+    Authenticated users can perform any request (read/write).
+    Unauthenticated users can only perform safe methods (e.g., GET, HEAD, OPTIONS).
+    e.g.,
+        from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
+        class PartiallyRestrictedView(APIView):
+            permission_classes = [IsAuthenticatedOrReadOnly]
+
+            def get(self, request):
+                return Response({"message": "Accessible to everyone for reading"})
+
+
+-------------------------------------
+
+APPLYING PERMISSIONS IN DRF
+
+1. Global Permission Settings -
+    Configure default permissions in settings.py:
+    e.g., 
+        REST_FRAMEWORK = {
+            'DEFAULT_PERMISSION_CLASSES': [
+                'rest_framework.permissions.IsAuthenticated',
+            ],
+        }
+
+2. View-Level Permissions - 
+    override the default permissions in specific views:
+    e.g.,
+        from rest_framework.permissions import AllowAny
+
+        class MyView(APIView):
+            permission_classes = [AllowAny]
+
+            def get(self, request):
+                return Response({"message": "This is public"})
+
+
+Custom Permissions - 
+    1. You can create custom permission classes by subclassing BasePermission.
+
+    e.g,
+        from rest_framework.permissions import BasePermission
+
+        class IsEmailDomainAllowed(BasePermission):
+            """
+            Allows access only to users with a specific email domain.
+            """
+            def has_permission(self, request, view):
+                if request.user and request.user.is_authenticated:
+                    return request.user.email.endswith('@example.com')
+                return False
+
+        usage in View:
+        class CustomPermissionView(APIView):
+        permission_classes = [IsEmailDomainAllowed]
+
+        def get(self, request):
+            return Response({"message": "You have access!"})
+    
+    2. Permission Methods  -
+        Custom permission classes can use the following methods:
+        1. has_permission(self, request, view)
+            a. Used to determine if the user can access the view.
+        
+        2. has_object_permission(self, request, view, obj)
+            a. Used for object-level permissions, restricting access to individual objects.
+
+        Object-Level Permissions
+            Sometimes, access needs to be granted based on the specific object being accessed.
+
+            Example: Object-Level Permission
+            Allowing access to an object only if the user is the owner:
+
+        e.g., 
+            from rest_framework.permissions import BasePermission
+
+            class IsOwner(BasePermission):
+                """
+                Custom permission to only allow owners of an object to edit or view it.
+                """
+                def has_object_permission(self, request, view, obj):
+                    return obj.owner == request.user
+
+            usage in a view:
+                class MyDetailView(RetrieveUpdateDestroyAPIView):
+                permission_classes = [IsOwner]
+                queryset = MyModel.objects.all()
+                serializer_class = MyModelSerializer
+
+    3. Combining multiple permissions 
+        1. Use the logical AND condition by listing multiple permissions in the permission_classes.
+
+        e.g.,
+            from rest_framework.permissions import IsAuthenticated, IsAdminUser
+
+            class CombinedPermissionView(APIView):
+                permission_classes = [IsAuthenticated, IsAdminUser]
+
+                def get(self, request):
+                    return Response({"message": "Accessible to authenticated admin users"})
+
+

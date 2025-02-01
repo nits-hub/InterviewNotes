@@ -1,0 +1,19 @@
+Why .env file is used?
+A .env file is used in Node.js projects to store environment variables. These variables are key-value pairs that are used to configure your application, such as database credentials, API keys, or server ports, without hardcoding them in your source code.
+
+Using a .env file keeps sensitive information secure and makes it easy to change configuration settings for different environments (e.g., development, testing, production).
+
+explain CORS?
+
+CORS (Cross-Origin Resource Sharing) is a security feature built into web browsers that controls how web pages can request resources (like data, images, or scripts) from different domains.
+
+Simple Explanation:
+Imagine you’re on a website (websiteA.com), and that website wants to get data from another website (websiteB.com). Normally, web browsers block these cross-domain requests to protect users from security risks. This is where CORS comes in.
+
+CORS is like a permission slip. websiteB.com can send a special header in its response saying, "I allow websiteA.com to access my data." If the permission is given, the browser allows the request to go through; if not, the request is blocked.
+
+Example:
+Without CORS: You try to get data from another website, but your browser says, "Nope, you can’t do that. It’s not safe."
+With CORS: The other website says, "It’s okay, I trust you," and your browser allows the data to be shared.
+
+In an interview, you could say CORS is a way for a website to securely share its resources with other websites by giving permission through special headers.

@@ -1,0 +1,15 @@
+==========map, filter, reduce==========
+map, filter, reduce function is always used with the array.
+
+A. map() - 
+	1. It is used to transform the elements in an array.
+	2. It applies a callback function to each element and creates a new array with the result.
+	use - modifying or mapping data from one form to another.
+
+	e.g., 
+		const name = ["abc", "bcd", "cde"];
+		name.map((element, index) => {
+			
+
+B. filter() - 
+	1. 

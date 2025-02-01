@@ -1,0 +1,40 @@
+
+TERMIUS SCREEN NOTES;
+	list all screen
+	screen -ls
+
+	start a screen
+	screen -S <session-name>, lets you inside the screen
+	
+	run your server
+	python3 manage.py runserver ipaddress:<port> | 139.5.189.24:8765
+	
+	
+	
+	
+	reattach screen 
+	screen -r <session-name>
+	
+	detach screen 
+	screen -d <session-name>
+
+	detach current screen session
+	Ctrl - A + D
+
+	If Already Attached Elsewhere (Use the following to forcibly reattach:)
+	screen -d -r <session-name>
+		This will detach the session from the other terminal and attach it to your current terminal.
+	
+	
+
+	delete(terminate) a specific screen session
+	screen -r <session-name>, then
+	exit
+		
+	kill a detached screen
+	screen -S <session-name> -X quit
+		
+	kill all screen 
+	pkill screen
+
+	

@@ -1,0 +1,76 @@
+Callbacks - 
+ 1. A callback is a function that is passed as an argument to another function. It is executed after the completion of that function, allowing asynchronous operations to be handled. Callbacks are commonly used for tasks like reading files, making API request or interacting with databases.
+
+ e.g.,
+    function fetchData(callback) {
+        setTimeout(() => {
+            console.log("Data fetched..");
+            callback();
+        }, 3000)
+    }
+
+    //callback function definition
+    function processData(){
+        console.log("Processing data..");
+    }
+
+    fetchData(processData);
+
+ Here the processData is a callback function that gets executed after the fetchData completes its task.
+
+
+Promises - 
+ 1. A promises is an object that represents the eventual completion or failure of an asynchronous operation. It allows you to chain operations, making the code more readable and manageable compared to callbacks.
+
+ A promise has three states:
+ (a) Pending: It is the initial state which indicates that the promise is neither fulfilled nor rejected.
+ (b) Fulfilled: The operation is completed successfully.
+ (c) Rejected: The operation failed.
+
+ e.g., 
+    function fetchData() {
+        return new Promise((resolve, reject) => {
+            setTimeout(()=>{
+                const success = true;   //simulate success or failure
+                if(success)
+                    resolve("Data fetched successfully");
+                else
+                    reject("Error fetching data");
+            },3000);
+        })
+    }
+
+    fetchData()
+    .then(data => {
+        console.log("data"); //output: data fetched successfully
+    })
+    .catch(error => {
+        console.log(error);
+    });
+
+Async/ Await - 
+ Async/ Await is built on top of Promises, making Asynchronous code look and behave more like Synchronous code.
+'async' is used to declare an asynchronous function, and 
+'await' is used to pause execution until the Promise is resolved/rejected.
+
+ e.g., 
+ async function fetchData(){
+    return new Promise((resolve, reject) => {
+        setTimeout(()=> {
+            const success = true;
+            if(success)
+                resolve("Data fetched..");
+            else
+                reject("Error fetching data..");
+        },3000);
+    });
+ }
+
+ async function processData(){
+    try{
+        const data = await fetchData();
+        console.log(data);
+    } catch(error) {
+        console.log(error);
+    }
+ }

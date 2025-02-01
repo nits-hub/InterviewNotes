@@ -1,0 +1,74 @@
+Nested Serializers - 
+    In DRF, you can serialize not just single model instances, but also models that have relationships to other models (like ForeignKey, ManyToManyField, etc.). This allows you to handle more complex data structures  to represent the related model’s data.
+
+
+    class Author(models.Model):
+    name = models.CharField(max_length=100)
+
+    class Book(models.Model):
+        title = models.CharField(max_length=100)
+        author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+    class AuthorSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Author
+            fields = ['name']
+
+    class BookSerializer(serializers.ModelSerializer):
+        author = AuthorSerializer()  # Nested serializer
+
+        class Meta:
+            model = Book
+            fields = ['title', 'author']
+
+
+    related_name: 
+        When working with ForeignKey or ManyToMany fields, you can use the related_name attribute to customize the reverse relationship name. This is particularly useful when you need to access a related model from the reverse side of the relationship.
+
+        e.g.,    
+            class Author(models.Model):
+                name = models.CharField(max_length=100)
+
+            class Book(models.Model):
+                author = models.ForeignKey(Author, related_name='books', on_delete=models.CASCADE)
+                title = models.CharField(max_length=100)
+
+            # This allows you to access the books related to an author using author.books.all()
+
+
+Filtering and Searching - 
+    Use DjangoFilterBackend and SearchFilter.
+
+    DRF provides built-in tools to handle filtering and searching of APIs.
+
+    1. DjangoFilterBackend: This allows you to filter querysets based on parameters passed in the request. It's typically used in conjunction with the django-filter library.
+    e.g., 
+        from rest_framework import filters
+        from django_filters import rest_framework as django_filters
+
+        class BookFilter(django_filters.FilterSet):
+            title = django_filters.CharFilter(lookup_expr='icontains')
+
+            class Meta:
+                model = Book
+                fields = ['title']
+
+        class BookViewSet(viewsets.ModelViewSet):
+            queryset = Book.objects.all()
+            serializer_class = BookSerializer
+            filter_backends = (filters.DjangoFilterBackend,)
+            filterset_class = BookFilter
+
+    2. SearchFilter: DRF’s SearchFilter allows searching across multiple fields of a model.
+
+    class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ['title', 'author__name']
+
+    # This allows you to search books by their title or author name.
+
+    
+
+

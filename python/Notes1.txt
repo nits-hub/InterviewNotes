@@ -1,0 +1,130 @@
+Python - 
+    Python is a popular programming language. It was developed by Guido Van Rossum, and released in 1991.
+    It is used for:
+        1. Web Development (server-side)
+        2. Software Development
+        3. Mathematics
+        4. System scripting.
+
+*Indentation - refers to the space at the beginning of a code line.
+    -> Python uses indentation to indicate a block of code.
+    -> Python will give you an error if you skip the indentation.
+
+    Note - * The number of spaces is up to you as a programmer, the most common use is four, but it has to be at least one.
+
+# Variable
+{
+    Variables - container for storing data values.
+    -> python is a dynamically typed PL.
+    -> That's why it has no commands for declaring variables.
+    -> Variable is created the moment you first assign a value to it.
+
+    Note - * Variable names are case-sensitive
+    e.g., 
+        x = 5
+        y = 10
+        print(x, y)     //5,10
+
+    e.g., 
+        x = 5
+        x = "hello"
+        print(x)        //hello
+
+    Casting - If you want to specify the data type of a variable, this can be done with casting.
+    e.g.,
+        x = int("10")
+        y = str(3)
+        z = float(3)
+
+    Get the type - to get the type of variable use the type() function.
+    e.g, 
+        x = 5
+        y = "hell"
+        print(type(x))
+        print(type(y))
+
+    Many Values to Multiple Variables - assign values to multiple variables in one line.
+    e.g.,
+        x, y, z = "one", "two", "three"
+        print(x)
+        print(y)
+        print(z)
+
+    One value to multiple variable
+    e.g.,
+        x = y = z = "Orange"
+        print(x,y,z)
+
+    unpack a collection - 
+        -> If you have a collection of values in list, tuple etc. Python allows you to extract the values into variables.
+        -> This is called unpacking.
+    e.g., 
+        fruits = ["apple", "banana", "cherry"]
+        a,b,c = fruits 
+        print(x,y,z)
+
+    Global Variable - 
+        -> variables created outside of a function are known as global variable, and can be accessible by both inside of a function and outside.
+        e.g.,
+            x = "awesome"
+
+            def myfunc():
+                print("Python is "+ x)
+            
+            myfunc()
+
+        
+        * The global keyword - To create a global variable inside a function, you can use the global keyword.
+        e.g.,
+            def myfunc():
+                global x = "awesome"
+            
+            myfunc()
+
+            print("Python is "+ x)
+}
+
+# Data type  
+{
+    Data types - Python has rich set of data types, and they are classified into 8 categories:
+
+        1. Text Type        - str 
+        2. Numeric Types    - int, float, complex
+        3. Sequence Types   - list, tuple, range
+        4. Mapping types    - dict 
+        5. Set Types        - set, frozenset
+        6. Boolean Types    - bool
+        7. Binary Types     - bytes, bytearray, memoryview
+        8. None Type        - NoneType
+
+    type constructors - If you want to specify the data type, you can use the following constructor functions:
+    x = str("Hello World")
+        int()
+        float()
+        complex()
+        list()
+        tuple()
+        range()
+        dict()
+        set()
+        frozenset()
+        bool()
+        bytes()
+        bytearray()
+        memoryview(bytes(5))
+    
+        Note - * Constructor functions can also be used for type conversions.
+
+
+
+
+
+}
+
+
+
+
+
+
+
+

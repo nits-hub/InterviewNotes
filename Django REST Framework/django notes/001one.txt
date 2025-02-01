@@ -1,0 +1,43 @@
+1. Introduction to Django and Virtual Environment
+
+    Learn about virtual environments and how to set them up.
+    Install Django Rest Framework in a virtual environment.
+    Set up your first Django project and app.
+----------------------------------------------------------------------    
+
+1. Django - 
+    -> Django is a high-level, open-source Python web framework that enables the rapid development of web applications.
+    -> It follows the Model-View-Template (MVT) architecture.
+    -> Django emphasizes reusability, modularity, security, and scalability.
+
+    key features:
+        -> Secure - Comes with built-in protection against common web vulnerabilities like SQL injection, XSS, and CSRF.
+        -> Rich Ecosystem: Provides ready-to-use components like authentication, URL routing, ORM, and admin panel.
+        -> Scalable: Easily handles heavy traffic and large-scale projects.
+
+2. Virtual Environment - 
+    -> A virtual environment is an isolated environment for Python projects. 
+    -> It ensures that dependencies for one project do not interfere with others, allowing you to maintain different versions of Python packages for different projects.
+    
+
+=======================
+steps to setup django project - 
+1. create directory and inside directory install virtualenv
+-> mkdir studentmanagement
+-> cd studentmanagement
+-> python -m venv env 
+-> env/Scripts/activate 
+
+2. install django rest framework 
+-> pip install djangorestframework
+
+3. setup your first Django project and app
+-> django-admin startproject studentmanagement .    //# Set up a new project with a single application
+-> django-admin startapp myapp
+-> cd ..
+
+5. sync your database for the first time:
+-> python manage.py migrate
+
+6. Run the development server to verify the project setup:
+-> python manage.py runserver

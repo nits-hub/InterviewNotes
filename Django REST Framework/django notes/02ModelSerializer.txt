@@ -1,0 +1,216 @@
+
+
+2. DRF BASIC---------------
+    1. What is DRF?
+    2. How it extends Django to build APIs.
+    3. Serialization and Deserialization process.
+
+3. Serialization and Deserialization process - 
+
+    {
+        A. Serialization: Converts complex data (e.g., models instances or python dictionaries) to simple formats (e.g., JSON).
+        Steps - 
+            1. Define a Serializer -    Create a serializer class to specify the data fields you want to serialize. 
+                                        Use ModelSerializer for automatic mapping of model fields or Serializer for custom implementations.
+            
+            2. Convert Data -   Use the serializer to transform model instances or python dictionaries into a serialized format.
+            e.g., 
+                from rest_framework import serializers
+                from myapp.models import Employee
+
+                class EmployeeSerializer(serializers.ModelSerializer):
+                    class Meta:
+                        model = Employee
+                        fields = ['id', 'name', 'email']
+
+                    # Serialize a model instance
+                    employee = Employee.objects.get(id=1)
+                    serializer = EmployeeSerializer(employee)
+                    print(serializer.data)  # Outputs: {'id': 1, 'name': 'John Doe', 'email': 'john@example.com'}
+                    
+        B. Deserialization: Converts simple formats (e.g., JSON) to complex data (e.g., Django model instances or python object).
+                            Deserialization is used for post and put operations 
+            steps - 
+                1. Validate incoming data - The serializer checks the data against defined validation rules (field types, constraints, custom validations).
+                                            If the data is invalid, a ValidationError is raised.
+                
+                2. Create/Update Object -   Use the validated data to create or update a database object.
+                
+                e.g., 
+                data = {'name': 'Jane Doe', 'email': 'jane@example.com'}
+                serializer = EmployeeSerializer(data=data)
+
+                if serializer.is_valid():
+                    # Save data to create a new Employee instance
+                    employee = serializer.save()
+                    print(employee)  # Outputs: <Employee object (Jane Doe)>
+                else:
+                    print(serializer.errors)  # Outputs validation errors if any
+    }
+
+3. Serializers:
+
+Learn about ModelSerializer and Serializer.
+Write custom serializers for data transformation.
+Understand fields and validation.
+
+SERIALIZER - 
+    1. A serializer in DRF is a way to convert complex data (such as Django model instances or querysets) into Python-native data types like dictionaries, which can then be rendered into JSON or other formats. 
+    2. Similarly, serializers can validate and deserialize incoming data into complex data types.
+
+    Types of Serializer - 
+        1. Serializer 
+        2. ModelSerializer 
+
+    2. ModelSerializer - 
+        1. A ModelSerializer is a shortcut serializer provided by DRF to automatically generate serializer fields based on the fields of a Django model.
+        2. It is tightly coupled with the model and is used when you want to serialize model instances or querysets.
+    
+        key features - 
+            1. Automatically maps fields from the Django model to serializer fields.
+            2. Simplifies code by eliminating the need to define fields manually.
+            3. Provides create() and update() methods by default, which can be customized.
+
+        Basic Example 
+        Model:
+            from django.db import models
+
+            class Book(models.Model):
+                title = models.CharField(max_length=100)
+                author = models.CharField(max_length=50)
+                published_date = models.DateField()
+                isbn = models.CharField(max_length=13, unique=True)
+                page_count = models.IntegerField()
+                cover_image = models.URLField(blank=True, null=True)
+
+        Serializer:
+            from rest_framework import serializers
+            from .models import Book
+
+            class BookSerializer(serializers.ModelSerializer):
+                class Meta:
+                    model = Book
+                    fields = '__all__'  # Include all fields from the model
+                    # fields = ['title', 'author', 'isbn']  # Include specific fields
+
+        METHODS IN MODEL SERIALIZER:------------
+            1. create(self, validated_data) - 
+                a. used to create a new model instance from the validated_data.
+                b. Use Case: When you need to save data from an API request to the database.
+
+                e.g., 
+                    def create(self, validated_data):
+                        return Book.objects.create(**validated_data)
+
+            2. update(self, instance, validated_data) -
+                a. Used to update an existing model instance with new validated data.
+                b. Use Case: When you need to update existing data, such as editing a user's profile or modifying a book's details.
+                e.g., 
+                    def update(self, instance, validated_data):
+                        instance.title = validated_data.get('title', instance.title)
+                        instance.author = validated_data.get('author', instance.author)
+                        instance.save()
+                        return instance
+            
+            3. to_representation(self, instance)
+                a. used to customize the data format when serializing
+                b. Use Case: Modify the serialized data (e.g., adding computed fields or formatting output).
+                e.g., 
+                    def to_representation(self, instance):
+                        data = super().to_representation(instance)
+                        data['author_uppercase'] = instance.author.upper()
+                        return data
+
+            
+            4. validate(self, data)
+                a. Used for custom validation logic across multiple fields.
+                b. Use Case: Ensure consistency across fields, like ensuring start_date is before end_date.
+                e.g.,
+                    def validate(self, data):
+                        if data['page_count'] <= 0:
+                            raise serializers.ValidationError("Page count must be greater than zero.")
+                        return data
+
+            5. validate_<field_name>(self, value)
+                a. Used for field-specific validation.
+                b. Use Case: Validate specific fields (e.g., ensuring email contains a domain).
+                e.g., 
+                    def validate_isbn(self, value):
+                        if len(value) != 13:
+                            raise serializers.ValidationError("ISBN must be exactly 13 characters long.")
+                        return value
+            
+        USE CASES OF MODEL SERIALIZER 
+        a. CRUD Operations - 
+            Scenario: Managing a library of books.
+        
+        b. Nested Serialization
+            Scenario: A book has many reviews.
+            Models:
+                class Review(models.Model):
+                    book = models.ForeignKey(Book, related_name="reviews", on_delete=models.CASCADE)
+                    review_text = models.TextField()
+                    rating = models.IntegerField()
+
+            Serializer:
+                class ReviewSerializer(serializers.ModelSerializer):
+                    class Meta:
+                        model = Review
+                        fields = ['review_text', 'rating']
+
+                class BookSerializer(serializers.ModelSerializer):
+                    reviews = ReviewSerializer(many=True, read_only=True)
+
+                    class Meta:
+                        model = Book
+                        fields = ['title', 'author', 'reviews']
+
+
+        c. Custom Output fields
+            Scenario: Add a calculated field to the output.
+            class BookSerializer(serializers.ModelSerializer):
+                total_reviews = serializers.SerializerMethodField()
+
+                class Meta:
+                    model = Book
+                    fields = ['title', 'author', 'total_reviews']
+
+                def get_total_reviews(self, obj):
+                    return obj.reviews.count()
+
+
+        d. Partial Updates
+            Scenario: Allow users to update only a few fields.
+            e.g.,
+                from rest_framework.generics import UpdateAPIView
+
+                class BookUpdateView(UpdateAPIView):
+                    queryset = Book.objects.all()
+                    serializer_class = BookSerializer
+                    partial = True  # Allow partial updates
+
+
+        e. Validating Relationships 
+            Scenario: Ensure a book's ISBN is unique across multiple users.
+            e.g., 
+                class BookSerializer(serializers.ModelSerializer):
+                    class Meta:
+                        model = Book
+                        fields = '__all__'
+
+                    def validate_isbn(self, value):
+                        if Book.objects.filter(isbn=value).exists():
+                            raise serializers.ValidationError("ISBN already exists.")
+                        return value
+
+
+
+    Conclusion
+        ModelSerializer simplifies working with Django models by:
+
+        1. Auto-generating serializer fields from model fields.
+        2. Providing ready-to-use create and update methods.
+        3. Supporting various levels of customization for validation, serialization, and relationships.
+        
+        It is ideal for scenarios where you directly interact with Django models and need a serializer to map data to and from these models.
+    
