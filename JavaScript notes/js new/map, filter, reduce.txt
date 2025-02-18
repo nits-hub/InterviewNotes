@@ -1,15 +1,41 @@
 ==========map, filter, reduce==========
 map, filter, reduce function is always used with the array.
 
-A. map() - 
-	1. It is used to transform the elements in an array.
-	2. It applies a callback function to each element and creates a new array with the result.
-	use - modifying or mapping data from one form to another.
+A. map() - Transform an array 
+	1. The map() method creates a new array by applying a function to each element of an existing array.
+	2. It does not modify the original array.
 
 	e.g., 
 		const name = ["abc", "bcd", "cde"];
-		name.map((element, index) => {
-			
+		name.map(num => num*num)
+	
+	📌 use cases:
+	1. ✅ Converting array values (e.g., doubling numbers, formatting strings)
+	2. ✅ Extracting specific properties from objects
+	3. ✅ Transforming data from API responses
 
-B. filter() - 
-	1. 
+
+B. filter() - Extract Elements Based on Condition
+	1. The filter() method returns a new array with elements that satisfy a given condition.
+	2. It does not modify the original array.
+
+	e.g.,
+		1. Get even number from an array.
+		const arr = [1,2,3,4,5,6]
+		const evenarr = arr.filter(num => num % 2 === 0)
+		console.log(evenarr)
+
+	use cases:
+	📌 Use cases:
+	1. ✅ Filtering out unwanted data
+	2. ✅ Removing duplicates (combined with Set)
+	3. ✅Searching for specific elements in an array
+
+3. reduce() - Aggregate Values into a single result
+	1. The reduce() method reduces an array to a single value by applying a function iteratively.
+	2. It takes a callback function and an optional initial value.
+
+	e.g., sum of all numbers in an array 
+		const numbers = [1,2,3,4,5]
+		const sum = numbers.reduce((acc, num) => acc + num, 0)
+		console.log(sum)

@@ -8,7 +8,7 @@ What is Javascript -
 
 Variables?
 =>  Variables are containers for storing data values.
-    In JavaScript, variables are declared using keywords like var, let, and const. Each serves a different purpose:
+    In JavaScript, variables are declared using keywords - var, let, and const. Each serves a different purpose:
 
     a. var has function scope and was traditionally used.
     b. let has block-level scope.
@@ -45,7 +45,9 @@ Operators?
         Type Operators - typeof, instanceof
 
 Functions?
-=>  A function is a reuseable block of code designed to perform particular task. Instead of writing the same code multiple times, functions allow you to write a set of instructions once and reuse it whenever needed. Functions can take inputs called parameters, and return an output.
+=>  1. A function is a reuseable block of code designed to perform particular task. 
+    2. Instead of writing the same code multiple times, functions allow you to write a set of instructions once and reuse it whenever needed. 
+    3. Functions can take inputs called parameters, and return an output.
 
 Basic Syntax of a Function
     function functionName(parameters) {
@@ -120,7 +122,7 @@ Types of function:
             const greeter = greet();
             console.log(greeter("Nitesh"));  // Outputs: Hello, Nitesh!
 
-    7. Callback function: 
+    7. Callback function:
         A callback function is a function passed into another function as an argument. It is executed after some operation is completed, making it essential for handling asynchronous tasks, like fetching data from an API.
 
         e.g., 
@@ -151,23 +153,12 @@ Default Parameters
         console.log(greet());  // Outputs: Hello, Guest!
         console.log(greet('Nitesh'));  // Outputs: Hello, Nitesh!
 
-Rest Parameters
-    Rest parameters allow you to pass an indefinite number of arguments as an array.
-
-    e.g., 
-        function sum(...numbers) {
-            return numbers.reduce((total, number) => total + number, 0);
-        }
-
-        console.log(sum(1, 2, 3, 4));  // Outputs: 10
-
-
 ------------------------------------------------------------------------------------------------
 Scope 
     The context in which variables are declared and can be accessed.
 
 Global Scope 
-    Variables declared outside of any function, accessible only within that function 
+    Variables declared outside of any function can also be accessible within that function. 
 
 Local Scope 
     Variables declared within a function, accessible only within that function.

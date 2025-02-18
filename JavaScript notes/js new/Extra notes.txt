@@ -1,0 +1,5 @@
+// Garbage Collection
+// In languages like C, C++, one have to manually allocate(assign) the memory, and deallocate(free) the memory for unused variables/objects.
+// but JS automatically allocates memory when objects are created and frees it when they are not used anymore (garbage collection).
+// and we have no control over G.C. like when to start and when to stop
+// It runs as the background process in JS engine.

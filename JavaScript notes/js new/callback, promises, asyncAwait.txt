@@ -1,5 +1,5 @@
 Callbacks - 
- 1. A callback is a function that is passed as an argument to another function. It is executed after the completion of that function, allowing asynchronous operations to be handled. Callbacks are commonly used for tasks like reading files, making API request or interacting with databases.
+ 1. A callback function is a function passed into another function as an argument. It is executed after some operation is completed, making it essential for handling asynchronous tasks, like fetching data from an API.
 
  e.g.,
     function fetchData(callback) {
@@ -50,8 +50,8 @@ Promises -
 
 Async/ Await - 
  Async/ Await is built on top of Promises, making Asynchronous code look and behave more like Synchronous code.
-'async' is used to declare an asynchronous function, and 
-'await' is used to pause execution until the Promise is resolved/rejected.
+ 'async' is used to declare an asynchronous function, and 
+ 'await' is used to pause execution until the Promise is resolved/rejected.
 
  e.g., 
  async function fetchData(){

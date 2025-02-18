@@ -1,0 +1,107 @@
+SPREAD & REST OPERATOR -
+    -> The spread (...) operator and rest (...) operator use the same syntax (...), but they serve different purposes.
+
+    1. Spread Operator (...) – Expanding Elements 
+        a. expands element of an array or object.
+        b. Used in array, object or function arguments 
+
+    2. Rest Operator (...) – Collecting Elements
+        a. Collects multiple elements into a single array.
+        b. Used in function parameter and destructuring.
+
+
+1. Spread operator examples 
+    Example 1: Expanding an Array into individual elements.
+    e.g., 
+        const arr = [1,2,3]
+        console.log(...arr)   // Output: 1 2 3
+
+    Example 2: Copying an Array (Shallow Copy)
+    e.g.,
+        const arr = [1,2,3]
+        const arr2 = [...arr]
+        console.log(arr, arr2)  // Output: [1, 2, 3]
+
+    Benefit: It prevents modifying the original array (arr1 remains unchanged).
+
+    Example 3: Merging Arrays
+    e.g.,
+        const arr1 = [1,2,3]
+        const arr2 = [4,5,6]
+        const merged = [...arr1, ...arr2]
+        console.log(merged)  // Output: [1, 2, 3, 4, 5, 6]
+
+    Example 4: Expanding Strings into an Array
+    e.g.,
+        const name = "hello"
+        const chars = [...name]
+        console.log(chars)   // Output: ['H', 'e', 'l', 'l', 'o']
+
+    Example 5: Using Spread in Function Arguments
+    e.g.,
+        function sum(a,b,c){
+            return a+b+c
+        }
+
+        const numbers = [1,2,3]
+        console.log(sum(...numbers))
+
+    Example 6: Copying & Merging Objects
+    e.g.,
+        const person = {'name': 'abc', 'age':21}
+        const job = {'role':'Developer'}
+
+        const employee = {...person, ...job}
+        console.log(employee)
+
+2. Rest operator examples - 
+    Example 1: Collecting Function Arguments (Rest in Function Parameters)
+    e.g., 
+        function sum(...numbers) {
+            return numbers.reduce((acc, number) => acc + number , 0)
+        }
+        console.log(sum(1,2,3,4,5,6))    // 21
+
+        Benefit: Allows functions to accept any number of arguments.
+    
+    Example 2: Destructuring an Array with Rest
+    e.g.,
+        const [first, second, ...rest] = [1,2,3,4,5,6]
+        console.log(first)      // 1
+        console.log(second)     // 2
+        console.log(rest)       // [3,4,5,6]
+
+    Example 3: Destructuring an Object with Rest
+    e.g.,
+        const user = { name: "John", age: 30, city: "New York", country: "USA" };
+        const {name, age, ...address} = user;
+
+        console.log(name)       // John
+        console.log(age)        // 30
+        console.log(address)    // { city: 'New York', country: 'USA' }
+
+    Example 4: Rest Operator in Function Parameters
+    e.g.,
+
+        function printNames(first, second, ...others) {
+        console.log("First:", first);
+        console.log("Second:", second);
+        console.log("Others:", others);
+        }
+
+        printNames("Alice", "Bob", "Charlie", "David");
+        // Output:
+        // First: Alice
+        // Second: Bob
+        // Others: [ 'Charlie', 'David' ]
+        
+    
+
+
+
+
+
+
+
+
+    

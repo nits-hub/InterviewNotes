@@ -52,5 +52,3 @@ Loops
                     console.log(fruit);
                 }
                 // Outputs: apple banana cherry
-
-
