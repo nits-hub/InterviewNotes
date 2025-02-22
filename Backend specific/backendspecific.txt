@@ -1,0 +1,28 @@
+1. CORS - 
+-> CORS is a security feature in web browsers that controls how resources (APIs, images, etc.) can be requested from different origins (domains). By default, browsers block requests from one domain to another for security reasons.
+
+Example: If your frontend (React app) is running on http://localhost:3000 and your backend API is at http://localhost:5000, then without CORS setup, the browser will block API calls.
+
+2. AUTHENTICATION - 
+3. AUTHORIZATION - 
+4. JWT - 
+-> JWT is a method for securely transmitting information between two parties (like frontend and backend). It is mostly used for authentication.
+
+Structure: A JWT consists of Header, Payload, and Signature.
+Example:
+js
+Copy
+Edit
+const token = jwt.sign({ userId: 123 }, "secretKey", { expiresIn: "1h" });
+This creates a token that expires in 1 hour.
+The token is sent with API requests (usually in the Authorization header), and the backend verifies it before giving access.
+
+5. .ENV file
+6. BCRYPT LIBRARY - 
+    A. SALTING
+    B. HOW HASHING ALGORITHM WORKS?
+
+7. JSON - is a lightweight data format used to store and exchange information b/w server and a client. It is easy to read and write for both human and machines.
+
+
+

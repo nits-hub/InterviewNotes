@@ -1,0 +1,27 @@
+Hi, my name is Nitesh Ratre, and I'm from Durg Chhattisgarh. I have completed my Master of Computer Application from NIT Raipur (2021-2024). 
+
+Currently, I am working as a Backend Developer Intern at Codenicely, where I am contributing to the VNR Company's Warehouse Resource Management Application.
+
+    This application streamlines the entire raw material lifecycle, from procurement to final product distribution. 
+    
+    The system handles:
+    1. Receiving raw materials from vendors
+    2. Processing materials through multiple steps such as washing, cleaning, and drying
+    3. Storing and managing inventory in the warehouse
+    4. Packaging and selling the final product in different sizes as per customer requirements
+    5. Tracking every transaction, ensuring complete traceability from purchasing to sales.
+    
+    As a Backend Developer, my role involves designing and developing scalable APIs, implementing real-time inventory tracking, and integrating secure authentication and role-based access control.
+
+Before this, I worked as a Full-Stack Developer Intern at NIC Bilaspur, where I developed the Network Management System using the MERN stack and Tailwind CSS. This system was built from scratch to streamline network issue management, allowing departments to track, and escalate complaints efficiently. It included a secure JWT-based authentication system, role-based dashboards, and an efficient complaint workflow.
+
+Core Technolgies:
+Javascript, MERN Stack, Mysql, Git, Github, Postman etc.
+
+My strengths are:
+1. I'm a quick learner with adaptablility to new technologies.
+
+Weakness:
+1. I have public speaking anxiety - but I'm actively working on it.
+
+

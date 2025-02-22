@@ -10,8 +10,14 @@ Variables?
 =>  Variables are containers for storing data values.
     In JavaScript, variables are declared using keywords - var, let, and const. Each serves a different purpose:
 
-    a. var has function scope and was traditionally used.
-    b. let has block-level scope.
+    a. var - 
+        i.  var has function scope and was traditionally used.
+        ii. var can be updated and redclared within its scope.
+
+    b. let - 
+        i.  let has block-level scope.
+        ii. let can be updated but cannot be redeclared.
+
     c. const is used to declare variables that won’t be reassigned, though the data inside can still be mutable if it’s an object or array.
 
 Data Types?
@@ -46,7 +52,7 @@ Operators?
 
 Functions?
 =>  1. A function is a reuseable block of code designed to perform particular task. 
-    2. Instead of writing the same code multiple times, functions allow you to write a set of instructions once and reuse it whenever needed. 
+    2. Instead of writing the same code multiple times, define the code once and reuse it whenever needed. 
     3. Functions can take inputs called parameters, and return an output.
 
 Basic Syntax of a Function

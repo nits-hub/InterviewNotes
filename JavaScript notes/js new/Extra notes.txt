@@ -3,3 +3,266 @@
 // but JS automatically allocates memory when objects are created and frees it when they are not used anymore (garbage collection).
 // and we have no control over G.C. like when to start and when to stop
 // It runs as the background process in JS engine.
+
+-----------------------------------------------------------------------
+1. Explain Hoisting in Javascript.
+-> Hoisting is a Javascript behaviour where the variable and function declaration are moved to the top of their scope before code execution. This means you can use varialbles and functions before they are declared in the code.
+
+    e.g., Variable Hoisting
+        console.log(a)      // undefined (variable is hoisted not initialized)
+        var a = 10;
+        console.log(a)      // 10
+
+    e.g., Function Hoisting
+        hello();
+
+        function hello(){
+            console.log("hello world!");
+        }
+
+    Note: 
+        1. However, let and const variables are hoisted but not initialized.
+        e.g.,
+            console.log(b);     // ReferenceError: cannot access 'b' before initialization
+            let b = 20;
+
+-----------------------------------------------------------------------
+2. Difference Between Primitive and Reference Types in JavaScript
+-> 
+    Feature	        Primitive Types	                    Reference Types
+
+1. Data Storage	    Stored directly in memory	        Stored as a reference (memory address)
+2. Types	        Number, String, Boolean, Null, 	    Object, Array, Function
+                    Undefined, Symbol, BigInt
+3. Mutability	    Immutable (cannot be changed)	    Mutable (can be changed)
+4. Comparison	    Compared by value	                Compared by reference
+
+
+    e.g.,
+        let x = 10;  // Primitive
+        let y = x;
+        y = 20;
+        console.log(x); // 10 (remains unchanged)
+
+        let obj1 = { name: "John" }; // Reference Type
+        let obj2 = obj1;
+        obj2.name = "Doe";
+        console.log(obj1.name); // "Doe" (obj1 is also affected)
+
+-----------------------------------------------------------------------
+3. What is the typeof Operator? Give Examples
+->  The typeof operator in JavaScript is used to determine the data type of a value.
+
+    console.log(typeof 42);       // "number"
+    console.log(typeof "Hello");  // "string"
+    console.log(typeof true);     // "boolean"
+    console.log(typeof undefined); // "undefined"
+    console.log(typeof null);      // "object" (JavaScript quirk)
+    console.log(typeof {});        // "object"
+    console.log(typeof []);        // "object" (arrays are objects)
+    console.log(typeof function(){}); // "function"
+
+    Note: typeof null returns "object" due to a legacy bug in JavaScript.
+
+-----------------------------------------------------------------------
+4. Difference Between null and undefined
+-> null - Intentional abscence of value 
+   undefined - Variable is declared but not assigned.
+
+-----------------------------------------------------------------------
+5. Purpose of the this Keyword in JavaScript
+-> The this keyword refers to the context in which a function is executed. The value of this depends on how the function is called.
+
+    Examples:
+    1.
+        Global Scope (window in browsers, global in Node.js)
+        console.log(this); // In browsers, refers to `window` object
+
+    2. Inside an Object (Refers to the object itself)
+        const obj = {
+            name: 'alice',
+            getName: function (){
+                return this.name;
+            }
+        }
+
+        console.log(obj.getName());     //Alice 
+
+    3. Arrow Functions (Inherits this from Parent Scope)
+        const person = {
+            name: 'alice',
+            greet: () => console.log(this.name)
+        }
+
+        person.greet();     // `this` does NOT refer to `person` but the surrounding scope
+
+    4. In a Constructor Function
+        function User(name) {
+        this.name = name;
+        }
+        const user = new User("Tom");
+        console.log(user.name); // "Tom"
+
+-----------------------------------------------------------------------
+6. Implicit vs. Explicit Type Coercion
+-> Type coercion is the automatic or manual conversion of values between different data types.
+
+    1. Implicit Coercion (Automatic by JavaScript)
+        console.log("5" + 5); // "55" (String concatenation)
+        console.log("5" - 1); // 4 (String converted to number)
+        console.log(true + 2); // 3 (true → 1)
+
+    2. Explicit Coercion (Manually by Developer)
+        console.log(Number("123")); // 123
+        console.log(String(123)); // "123"
+        console.log(Boolean(0)); // false
+
+-----------------------------------------------------------------------
+7. Difference Between == and === in JavaScript
+-> 
+    Operator	                Explanation
+    == (Loose Equality)	        Compares values after type conversion
+    === (Strict Equality)	    Compares both value and type
+
+    e.g.,
+        console.log(5 == "5");  // true (type coercion happens)
+        console.log(5 === "5"); // false (different types)
+        console.log(null == undefined); // true
+        console.log(null === undefined); // false
+
+-----------------------------------------------------------------------
+8. How Does JavaScript Handle Asynchronous Operations?
+-> JS uses callbacks, promises or async/await to handle asynchronous task/operations.
+
+-----------------------------------------------------------------------
+9. Closure in JS, Example?
+-> A closure is a function that retains access to its parent's scope even after the parent function has executed. Closures are useful for data encapsulation and maintaining state.
+Closures are useful for data encapsulation and maintaining state.
+
+    e.g.,
+        function outerfunction(outervariable){
+            return function innerfunction(innervariable){
+                console.log(`Outer: ${outervariable}, Inner: ${innervariable}`);
+            };
+        }
+
+        const closureexample = outerfunction("HEllo");
+        closureexample("World");
+
+    Here, innerFunction still has access to outerVariable even though outerFunction has finished execution.
+
+-----------------------------------------------------------------------
+10. How do you remove duplicates from an array in JS?
+-> 
+    1. code: using Set 
+        const numbers = [1, 2, 2, 3, 4, 4, 5];
+        const uniquenumbers = [...new Set(numbers)]
+        console.log(uniquenumbers)
+
+    2. code: using filter
+
+    3. code: using reduce
+        const numbers = [1, 2, 2, 3, 4, 4, 5];
+        const uniquenumbers = number.reduce((acc, curr) => {
+            if !acc.includes(curr);
+                acc.push(curr);
+            return acc;
+        }, [])
+
+        console.log(uniquenumbers)
+
+-----------------------------------------------------------------------
+11. Shallow copy v/s Deep copy.
+->
+    1. Shallow copy - A shallow copy only copies the first level properties, meaning nested objects remain as references.
+
+        e.g.,
+            const original = {a: 1, b: {c: 2}};
+            const shallowcopy = {...original }  // spread operator for shallow copy 
+            shallowcopy.b.c = 42;   // modifying the nested objects 
+            console.log(original.b.c );     // output: 42 (Affects the original array)
+        
+        ways to create shallow copy - 
+            1. using spread operator (...)
+            2. using Object.assign() - const shallowcopy2 = Object.assign({}, original);
+
+    2. Deep copy - A deep copy creates a completely independent clone, ensuring changes to nested objects do not affect the original.
+
+        e.g.,
+            const original = { a: 1, b: { c: 2 } };
+
+            const deepCopy = JSON.parse(JSON.stringify(original)); // Deep copy
+
+            deepCopy.b.c = 42; // Modify nested object
+
+            console.log(original.b.c); // Output: 2 (Original remains unchanged)
+        
+        ways to create deep copy - 
+            1. using structuredClone() - 
+                const deepcopy2 = structuredClone(original);
+
+----------------------------------------------------------------------
+12. Local Storage v/s Session Storage.
+->  Both are web storage APIs for storing data in the browser.
+    1. Local storage - 
+        a. It stores the data permanently until deleted manually.
+        b. It has storage limit of 5mb.
+        c. Stored data is shared across all tabs/windows for the same origin.
+
+    2. Session storage - 
+        a. It stores only for the session (clears when the tab is closed.)
+        b. It has storage limit of 5mb.
+        c. Available only in the tab where it was created.
+
+    
+    e.g.,
+        // Store data
+        localStorage.setItem("name", "John");
+        sessionStorage.setItem("age", "25");
+
+        // Retrieve data
+        console.log(localStorage.getItem("name")); // Output: John
+        console.log(sessionStorage.getItem("age")); // Output: 25
+
+        // Remove data
+        localStorage.removeItem("name");
+        sessionStorage.clear();
+
+-----------------------------------------------------------------------
+13. JSON.stringify(), JSON.parse().
+-> 
+    1. JSON.stringify() – Convert Object to JSON String.
+        use case:
+            a. ✅ Sending data in API requests.
+            
+        e.g.,
+            const person = { name: "John", age: 30 };
+            const jsonString = JSON.stringify(person);
+
+            console.log(jsonString); 
+            // Output: '{"name":"John","age":30}' (JSON string)
+            console.log(typeof jsonString); 
+            // Output: "string"
+
+    2. JSON.parse() - Convert JSON String to Object
+        USE CASES:
+            a. Reading JSON data from API responses.
+        e.g.,
+            const jsonString = '{"name":"John","age":30}';
+            const personObject = JSON.parse(jsonString);
+
+            console.log(personObject); 
+            // Output: { name: "John", age: 30 } (JavaScript object)
+            console.log(typeof personObject); 
+            // Output: "object"
+    
+
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
+
+    
+
+
+

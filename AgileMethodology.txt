@@ -1,0 +1,16 @@
+1. Agile methodology is a flelxible and iterative approach used for software development and project management.
+
+2. Its main focus is on fast delivery, continuous improvement and customer satisfaction.
+
+3. It breaks down the big problem into smaller iterations (sprints) and works on them step by step.
+
+    Main Principles of Agile methodology:
+    1. Customer Collaboration - Regular feedback is taken from customers to ensure the product meets their needs.
+
+    2. Iterative Development – The project is divided into small phases (sprints), where each sprint delivers a working feature.
+
+    3. Flexibility – Requirements can change, and the team can adapt accordingly.
+
+    4. Continuous Improvement – After every sprint, the team reviews what worked well and what needs improvement.
+
+    5. Cross-functional Teams – Developers, testers, and designers work together as a self-organized team.

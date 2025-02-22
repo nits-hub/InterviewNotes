@@ -20,7 +20,7 @@ SPREAD & REST OPERATOR -
     e.g.,
         const arr = [1,2,3]
         const arr2 = [...arr]
-        console.log(arr, arr2)  // Output: [1, 2, 3]
+        console.log(arr2)  // Output: [1, 2, 3]
 
     Benefit: It prevents modifying the original array (arr1 remains unchanged).
 
