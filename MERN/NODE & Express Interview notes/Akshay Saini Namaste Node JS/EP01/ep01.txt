@@ -1,0 +1,28 @@
+1. Quick and Easiest way to write code in Node.js is using:
+-> Node REPL(Read, Evaluate, Print, Loop)
+
+2. type command "node" to enter the Node REPL:
+-> node
+-> 1+2
+3
+-> console.log("hello")
+hello
+undefined
+
+i.e., It reads the code, 
+      Evaluate the code, 
+      print the output, 
+      and then loop.
+
+Note: 
+    1. Node.js is a chrome's [V8 JS-Engine + SuperPowers]
+    2. SuperPower is nothing but the global object that has all the properties which powers up the Node.js., and we can access by running the command global.
+        a. global 
+    3. In the browser Window is the global object and we can access it by running the command:
+        a. this
+        b. window 
+        c. self
+        d. frames
+    4. There is a common global object - "globalThis", around all the browsers and runtime environment that supports javascript.
+    
+    

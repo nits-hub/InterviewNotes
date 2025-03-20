@@ -1,0 +1,43 @@
+Common Interview Questions about Lifecycle methods?
+    1. How does componentDidMount() differ from componentDidUpdate()?
+    2. How do you prevent unnecessary re-renders in a class component?
+    3. What is getDerivedStateFromProps() used for?
+    4. How do you handle side effects in functional components?
+    5. How do you cancel API requests when a component unmounts?
+    6. What is the difference between componentWillUnmount() and the cleanup function in useEffect()?
+
+    
+
+5. How do you cancel API requests when a component unmounts?
+    a. For axios, we pass cancelToken along with the api call. [axios.cancelToken is used.]
+    2. Use AbortController for fetch().
+
+    Example: Cancel API request on Unmount.
+    
+    import React, {useState, useEffect} from "react";
+    import axios from "axios";
+
+    const FetchData = () => {
+        const [data, setData] = useState([]);
+        const source = axios.CancelToken.source();
+
+        useEffect(() => {
+            axios.get("api-url", {cancelToken: source.token})
+            .then((res) => {
+                setData(res.data)
+            })
+            .catch((err) => {
+                if (axios.isCancel(err)) {
+                    console.log("request cancelled");
+                }   
+            });
+
+            return () => {
+                source.cancel("Component unmounted, request cancelled.");
+            };
+
+        }, []);
+    }
+
+
+

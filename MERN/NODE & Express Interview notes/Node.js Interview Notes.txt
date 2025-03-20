@@ -1,0 +1,205 @@
+*****Node.js Interview Notes*****
+_________________________________
+
+What is Node.js?
+Node.js is an open-source and cross-platform server environment that is used for running web applications outside the client's browser.
+
+Note: JavaScript is executed either in the client's browser or outside the client's browser.
+
+Client side rendering V/S Server side rendering?
+{
+    client side rendering - 
+    where - Rendering happens in the browser(client-side)
+    How it works?
+        -> The server sends an html file with javascript code to the browser.
+        -> The browser then downloads and executes the javascript, which fetches the data and renders the content dynamically on the client side.
+
+    Pros:
+        -> It provides faster interaction after the initial load since only the data changes are sent b/w the server and the client.
+    Cons:
+        -> Slower initial load time as the browser must download, parse and execute javascript.
+
+    server side rendering - 
+    where - Rendering happens on the server before sending the content to the browser.
+    How it works?
+        -> The server processes the request, generates full HTML content with the executed javascript, and sends it to the browser.
+        -> The browser displays the fully rendered page almost immediately.
+
+    Pros:
+        -> Faster initial load time, as the content is pre-rendered on the server.
+    Cons:
+        -> Slower interactions after the initial load since the server needs to render and send updates for each user action.
+}
+
+Why Node.js?
+ 1. It uses asynchronous programming. i.e., it eliminates the waiting part and simply continues with the next request.
+    
+    Synchronous vs Asynchronous programming
+    {
+        Synchronous programming - Tasks are execute one after the other. The program waits for each task to complete before moving on to the next one. This can lead to delay if a task take long time to complete.
+
+        Asynchronous programming - is a programming paradigm where the Tasks can start and execute independently. The program can move on to the other tasks while waiting for the previous task to complete. i.e., It enables your program to remain responsive and handles multiple operations concurrently.
+        
+        Real life example - While downloading a file we can surf the internet.
+    }
+
+2. Node.js runs single-threaded, non-blocking, asynchronous programming, which is very memory efficient.
+    {
+        What does single-threaded mean in node.js - 
+            In computing, a thread is a smallest unit of processing that can be scheduled by an operating sytem. 
+            Many programming languages uses a multi-threaded approach, where the multiple threads handle multiple tasks concurrently. Each thread operates independently, allowing for parallel execution of code.
+
+            However, Node.js is designed to be single-threaded, meaning it uses a single thread to handle all tasks. To achieve this, Node.js uses an event-driven, non-blocking I/O model.
+        
+        What does non-blocking mean in node.js - 
+            Node.js is non-blocking, meaning that it doesn't wait for I/O operations to complete before moving on to the next task. Instead, it registers a callback to be executed when the operation is done. This allows Node.js to handle many I/O operations concurrently, even though it's single-threaded.
+    }
+
+
+Event Driven Architecture?
+Event-driven architecture (EDA) is a design pattern where the flow of the program is determined by events— like user interactions, messages from other systems, or changes in state. In Node.js, this architecture is fundamental because Node.js is built around an asynchronous, non-blocking I/O model, making it ideal for handling events efficiently.
+
+How it works?
+ 1. Event Emitters - 
+    (a) In Node.js, the core of the event-driven architecture is the `EventEmitter` class, part of the `events` module. 
+    (b) An EventEmitter object is capable of emitting named events and registering listeners (callbacks) that are triggered when those events occur.
+
+    e.g.,
+        const EventEmitter = require('events');
+        const eventEmitter = new EventEmitter();
+
+        // Register a listener
+        eventEmitter.on('greet', (name) => {
+        console.log(`Hello, ${name}!`);
+        });
+
+        // Emit an event
+        eventEmitter.emit('greet', 'Nitesh');
+
+2. Asynchronous operation - 
+    (a) Node.js uses an event-driven architecture to manage asynchronous operations, such as I/O tasks. When an operation (like reading a file or making a network request) is initiated, Node.js continues executing the remaining code without waiting for the operation to complete. Once the operation finishes, an event is emitted, triggering any associated callbacks.
+
+    (b) This allows Node.js to handle thousands of concurrent operations efficiently, making it highly scalable and responsive.
+
+3. Event Loop - 
+    (a) The event loop is the engine that drives the event-driven architecture in Node.js. It's responsible for continuously checking the event queue and executing callbacks when events occur. The event loop ensures that all asynchronous operations are handled smoothly without blocking the main thread.
+
+
+What can Node.js do?
+ 1. Node.js can create, read, update and delete file on server.
+ 2. Node.js can perform CRUD operation in your database.
+ 3. Node.js can generate dynamic page content.
+ 4. Node.js can collect form data.
+
+What is module?
+ Modules can be considered same as javascript libraries.
+ A set of functions which you want to include in your application.
+
+ e.g., Node.js has built-in module called HTTP, which allows Node.js to transfer data over Hyper Text Transfer Protocol.
+ To include http method use the require() method;
+ 
+ code: 
+ var http = require('http');
+ 
+What is NPM?
+NPM stands for Node Package Manager, it is a runtime environment that allows you to run Javascript on the server side. The official website of NPM hosts thousands of packages for free to download and use.
+
+    Key features of NPM:
+    1. NPM allows you to install packages locally into your project.
+    2. Dependency Mangement - When you install a package, it is added to your 'node_modules' folder, and an entry is added to your 'package.json' file under 'dependencies' section.
+    3. Versioning - NPM allows you to manage package versions, ensuring that your project is always using the correct versions of its dependencies.
+
+
+_____________________________________________________________________
+Node.js File System Module
+{
+ 1. The Node.js file system module allows you to work with the file system on your computer.
+
+ 2. To include the File System module, use the require() method:
+    e.g., var fs = require('fs');
+
+ Common use for the file System module:
+  1. Create files. 
+  2. Read files.
+  3. Update files.
+  4. Delete files.
+  5. Rename files.
+
+ 1. Read file - fs.readFile() method is used to read files on your computer.
+  e.g., readFile.js - is a file_name.
+    
+        var http = require('http');
+        var fs = require('fs');
+        http.createServer(function (req, res) {
+        fs.readFile('demofile1.html', function(err, data) {
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(data);
+            return res.end();
+        });
+        }).listen(8080);
+
+ 2. Create file - The File System module has methods for creating new files:
+
+    (a) fs.appendFile() - 
+        The fs.appendFile() method appends specified content to a file. If the file does not exist, the file will be created:
+        e.g., 
+            var fs = require('fs');
+
+            fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) {
+            if (err) throw err;
+            console.log('Saved!');
+            });
+
+    (b) fs.open() - 
+        The fs.open() method takes a "flag" as the second argument, if the flag is "w" for "writing", the specified file is opened for writing. If the file does not exist, an empty file is created:
+        e.g.,
+            var fs = require('fs');
+
+            fs.open('mynewfile2.txt', 'w', function (err, file) {
+            if (err) throw err;
+            console.log('Saved!');
+            });
+
+    (c) fs.writeFile() - 
+        The fs.writeFile() method replaces the specified file and content if it exists. If the file does not exist, a new file, containing the specified content, will be created:
+        e.g., 
+            var fs = require('fs');
+
+            fs.writeFile('mynewfile3.txt', 'Hello content!', function (err) {
+            if (err) throw err;
+            console.log('Saved!');
+            });
+
+ 3. Update file - The File System module has methods for updating files:
+
+    (a) fs.appendFile()
+    (b) fs.writeFile() - overwrites the existing content and file.
+
+ 4. Delete file - To delete a file with the file system module, use the fs.unlink() method.
+    e.g.,
+        var fs = require('fs');
+
+        fs.unlink('mynewfile2.txt', function (err) {
+        if (err) throw err;
+        console.log('File deleted!');
+        });
+
+ 5. Rename file - To rename a file with the File System module, use the fs.rename() method.
+ e.g.,
+    var fs = require('fs');
+
+    fs.rename('mynewfile1.txt', 'myrenamedfile.txt', function (err) {
+    if (err) throw err;
+    console.log('File Renamed!');
+    });
+}
+
+
+
+
+
+
+
+
+
+

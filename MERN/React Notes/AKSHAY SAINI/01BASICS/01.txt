@@ -1,0 +1,229 @@
+React?
+    a. React is an open-source javascript library which makes building user interfaces easy and fast by using fascinating features like resuable components, virtual dom, jsx, hooks etc.
+    b. React is primarily used for building SPA's.
+    c. React is developed by Facebook on march 2013.
+
+SPA's?
+    a. A single page application is a web-application that loads a single html page and dynamically updates the page as user interacts with it, without requiring a full page reload.
+    b. SPA's use technologies like - AJAX and JS Framework (React, Angular, Vue) to fetch and render data dynamically.
+
+Features of React?
+    React has a lot of fascinating features:
+    a. JSX - (Javascript XML)
+        1. JSX is a fancy way of writing HTML code within javascript to describe what UI should look like.
+    
+    b. Component Based Architecture - 
+        1. React is all about components, it means the UI can be divided into reusable, self-contained pieces called components, and each component can manage its own state and logic.
+
+    c. Virtual DOM - 
+        a. Virtual DOM is a lightweight copy of the actual DOM in memory.
+        b. When the state of an application chages, react uses virtual DOM to improve the performance by updating only the changed part of the actual DOM.
+
+    d. Hooks - 
+        a. React's functional component are stateless.
+        b. React provide hooks which allows functional componet to manage state & side effects.
+        Commonly hooks include -> useState, useEffect, useContext, useMemo, useRef.
+
+    5. LifeCycle Methods - 
+        a. In class component, React provides LifeCycle methods that allows you to hook into different phases of a component's life to control the behaviour of a component during its creation, updating, and destruction.
+        b. These method can be grouped into three phases: mounting, updating and unmounting.
+        c. In functional component, similar behaviour can be achieved using hooks like useEffect.
+
+
+Two most significant drawbacks of react?
+1. Frequent updates.
+2. Learning curve.
+
+
+What are components. Types of Component?
+    a. Components are the building blocks of React application. 
+    b. They allow developers to divide the UI into reusable, self-contained pieces called components.
+    c. Each component can manage their own state and logic.
+
+    In react, components are of two types:
+
+    a. Functional Component: 
+        A. Functional components are JavaScript functions that return JSX (React elements).
+        B. Functional component are stateless, they make use of hooks to manage state and sideeffects.
+
+        code: stateless 
+            const Message = () => {
+                return (
+                    <>
+                        <h1>Hello World</h1>
+                    </>
+                )
+            }
+
+            export default Message;
+        
+        code: stateful
+            import React, { useState } from "react";
+
+            const Counter = () => {
+                const [count, setCount] = useState(0)
+
+                return (
+                    <>
+                        <h1>Count: {count}</div>
+                        <button onClick={() => setCount(count+1)}>Increment </button>
+                    </>
+                )
+            }
+
+            export default Counter;
+        
+        Why use Functional Component?
+        1. Less code (no this keyword, no class boilerplate)
+        2. Better performance since they dont extend React.Component.
+        3. Hooks support (useState, useEffect etc.)
+        
+    
+    b. Class Component:
+        A. These are ES6 classes that extends "React.Component" and use render() to return jsx.
+
+        code: stateless 
+            import React, {Component} from "react";
+
+            class Welcome extends Component {
+                render () {
+                    return <h2>Hello, Welcome to React (Class Component)! </h2>;
+                }
+            }
+
+            export default Welcome;
+
+        code: stateful
+            import React, {Component} from "react";
+
+            class Counter extends Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {count:0};
+                }
+
+                increment = () => {
+                    this.setState({count: this.state.count + 1});
+                };
+
+                render() {
+                    return (
+                        <>
+                            <h2>Count: {this.state.count}</h2>
+                            <button onClick={this.increment}>Increment</button>
+                        </>
+                    )
+                }
+            }
+
+            export default Counter;
+
+            Whu use Class Components?
+            1. Useful in legacy projects that don't use Hooks.
+            2. Can use LifeCycle methods like componentDidMount(), componentDidUpdate(), componentWillUnmount().
+            3. Not recommended for new projects (Hooks replace most use cases).
+
+
+Fetching data with axios in Functional Component
+
+    import React, {useState, useEffect} from "react"
+    import axios from "axios"
+
+    const AxiosFunctional = () => {
+        const [data, setData] = useState([]);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState(null);
+
+        useEffect(()=> {
+            const fetchData = async () => {
+                try{
+                    const response = await axios.get("api-url");
+                    setData(response.data);
+                } catch (err) {
+                    setError(err.message);
+                } finally {
+                    setLoading (false);
+                };
+            }
+
+            fetchData();
+        }, []);     //Empty dependency array runs only once when component mounts
+
+        if (loading) return <h2>Loading...</h2>
+        if (error) return <h2>Error: {error}</h2>
+
+        return (
+            <>
+                <h2>Posts</h2>
+                <ul>
+                    {
+                        data.map((post) => (
+                            <li key={post.id}>{post.title}</li>
+                        ))
+                    }
+                </ul>
+            </>
+        )
+    }
+
+    export default AxiosFunctional;
+
+Fetching data with axios in Class Component 
+
+    import React, {Component} from "react";
+    import axios from "axios";
+
+    class AxiosFunctional extends Component {
+        constructor (props) {
+            super(props);
+            this.state = {
+                data: [],
+                loading: true,
+                error: null,
+            };
+        }
+
+        componentDidMount() {
+            axios.get("api-url")
+            .then((response) => {
+                this.setState({data: response.data, loading: false});
+            })
+            .catch((error) => {
+                this.setState({error: error.message, loading: false});
+            });
+        }
+        render() {
+            const {data, loading, error} = this.state;
+            if (loading) return <h2>Loading ...</h2>
+            if (error) return <h2>Error: {error} </h2>
+
+            return (
+                <div>
+                    <h2>Posts</h2>
+                    <ul>
+                    {data.map((post) => (
+                        <li key={post.id}>{post.title}</li>
+                    ))}
+                    </ul>
+                </div>
+            );
+        }
+    }
+
+    export default AxiosClass;
+
+D/B State and Props?
+    a. State - 
+        1. It is the component's internal data that changes over time and trigger re-rendering when updated.
+        2. It is mutable and controlled within the component.
+
+    b. Props - short for Properties. 
+        1. Props are read-only data passed from parent component to a child component.
+        2. Props are immutable and used for rendering dynamic content.
+
+
+Reconciliation?
+    a. Reconciliation is a process that react uses it to update the DOM efficiently. When the state or props changes react compares new-virtual DOM tree with the previous one, identifies changes, and updates only the changed part of the real DOM.
+
+    
+

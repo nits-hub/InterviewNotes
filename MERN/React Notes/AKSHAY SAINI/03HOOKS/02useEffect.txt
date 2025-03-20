@@ -1,0 +1,75 @@
+2. useEffect - 
+    a. It is used to perform side effects such as data fetching from an api, dom manipulation; after the component has been rendered.
+
+    syntax: 1.
+        a. Runs after every render by-default. 
+        b. [Similar as componentDidUpdate method of class component].
+        useEffect(() => {
+            //code 
+        });
+
+    syntax: 2.
+
+        useEffect(() => {
+
+        }, [])
+
+    syntax: 3. //Effect runs when count changes.
+        useEffect(() => {
+
+        }, [count])
+
+Features of useEffect:
+1. In useEffect, if you skip dependency array, then the effect will run on every render. 
+[similar as componentDidUpdate method of class component]
+
+2. In useEffect, if you pass an empty array (dependency array), then the effect runs only once after the component mounts.
+[similar as componentDidMount method of class component]
+
+3. In useEffect, when you pass dependencies in the array, then effect runs whenever one of the dependencies changes.
+[similar to componentDidUpdate method of class component]
+
+
+code:
+
+import React, {useState, useEffect} from "react";
+import axios from "axios";
+
+class DataFetcher = () => {
+    const [data, setData] = usestate([])
+    const [loading, setLoading] = usestate(true);
+    const [error, setError] = usestate(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get("api-url");
+                setData(response.data)
+            } catch ((error) => {
+                console.log(error)
+            }) finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+
+        //cleanup function (optional)
+        return () => {
+            cosole.log("Cleanup: Component unmounted");
+        };
+    }, [])
+
+    return (
+        <>
+            {loading && <h3>Loading ...</h3>}
+            {error && <h3>{error}</h3>}
+            {!loading && !error && data.map((item) => {
+                <p key={item.id}>{item.title}</p>
+            })}
+        </>
+    )
+}
+
+export default DataFetcher;

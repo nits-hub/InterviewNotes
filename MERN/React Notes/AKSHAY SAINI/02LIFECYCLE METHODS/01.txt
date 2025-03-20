@@ -1,0 +1,49 @@
+LifeCycle Methods - 
+    1. Mounting Phase (When component is created).
+        a. In this phase, the component is created and inserted into the dom. It consists of:
+            1. constructor() - Initializes state and binds methods.
+            2. static getDerivedStateFromProps() - Syncs state with props before rendering.
+            3. render() - Renders the UI.
+            4. componentDidMount() - Runs after component mounts. Used for API calls, event listeners, etc.
+
+            e.g.,
+                import React, {Component} from "react";
+
+                class MountingExample extends Component {
+                    constructor(props){
+                        super(props);
+                        this.state = {count: 0}
+                        console.log("Constructor: Component is being initialized")
+                    }
+
+                    static getDerivedStateFromProps(props, state) {
+                        console.log("getDerivedStateFromProps: Syncing state with props", props)
+                        return null;
+                    }
+
+                    componentDidMount() {
+                        console.log("componentDidMount: Component mounted to the DOM")
+                    }
+
+                    render() {
+                        console.log("Render: Rendering component");
+                        return <h2>Component Mounted</h2>
+                    }
+                }
+
+                export default MountingExample
+
+    2. Updating Phase (When Component Renders Again)
+        a. In this phase, component re-renders due to changes in state or props. It consists of: 
+            1. getDerivedStateFromProps() - Syncs state with props before rendering.
+            2. shouldComponentUpdate() - Controls if the component should re-render.
+            3. render() -  Re-renders the component when state/props change.
+            4. getSnapshotBeforeUpdate() - Captures the DOM state before the update.
+            5. componentDidUpdate - Runs after the component updates. Used for API calls, DOM updates, side effects.
+
+    3. Unmounting Phase (When Component is Removed)
+        a. In this phase, the component is removed from the dom. It consist of:
+            1. componentWillUnmount - Runs before unmounting. Used to clean up timers, event listeners, or API calls.
+        
+
+

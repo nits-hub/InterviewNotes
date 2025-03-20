@@ -1,0 +1,23 @@
+1. useState - 
+    a. It adds state to a functional component.
+    b. It takes an initial value as an argument and an array with two elements.
+        -> The current state value
+        -> Function to update the state.
+
+code:
+    import React from "react";
+
+    class Counter = () => {
+        const [count, setCount] = useState(0);
+
+        return (
+            <>
+                <h2>Count: {count} </h2>
+                <button onClick={() => setCount(count + 1)}> Increment </button>
+            </>
+        )
+    }
+
+    export default Counter;
+
+    

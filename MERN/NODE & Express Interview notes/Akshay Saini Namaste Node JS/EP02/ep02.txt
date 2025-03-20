@@ -1,0 +1,5 @@
+Funfact about Node.js?
+-> Node.js is C++ code.
+-> JS Engine - V8 (Google) is a C++ code.
+
+

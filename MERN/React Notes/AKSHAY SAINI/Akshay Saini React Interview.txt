@@ -1,0 +1,116 @@
+Akshay Saini React Interview:
+1. Hooks - 
+	usestate, 
+	useeffect [dependency array], 
+	usecontext, 
+	usereducer,
+	usememo,
+	usecallback,
+	useref.
+
+2. HigherOrderComponents - [IMP for Machine Coding Round]
+	a. what?
+	b. Why?
+	c. When?
+	d. How?
+3. LifeCycle methods of component [IMP]
+	a. mounting
+	b. updating
+	c. unmounting
+
+4. State Management
+	a. state/props
+	b. props drilling
+	c. context [imp]
+
+5. Redux/Zustand
+	a. How redux works
+	b. Why do we need redux?
+	c. When do we need redux?
+	d. Learn What is Redux Toolkit (RTK).
+
+6. Custom Hooks?
+	a. when to use?
+	b. Write code?
+	Note: 1. It makes your code clean, maintainable, readable, reusable.
+	use: 1. to store the data in localstorage.
+
+7. Lazy Loading? - Will make your code much more performant. [VERY IMP]
+	a. Code splitting?
+	b. chunking?
+	c. suspense?
+
+8. Virtual DOM?
+	a. Reconciliation algorithm.
+	b. React Fiber
+	c. Renders - How the component renders works?
+	d. Diffing Algorithm.	[React makes a tree and then calculates the diff of the component and then renders only specific parts of it]
+
+9. SSR v/s CSR (HOT QUESTION)
+	a. What is ssr and csr
+	b. When to use ssr/csr
+	c. SEO of React
+	d. Performance.
+
+10. Routing (RBAC - Role based access control)	
+	a. react-router
+	b. protected-routes
+	c. query params inside routing.
+	d. dynamic routing - /user, /user/id
+
+11. Testing - [In the machine coding round if you are building a feature and write the test cases for it you are definitely going to be selected.] 
+	a. React Testing Library.
+	b. Unit Testing
+	c. 
+
+12. Async Tasks - 
+	a. API calls - fetch, axios etc.
+	b. Events -  click, submit, scroll etc.
+	c. promises [part of js very important] 
+	d. setTimeout, setInterval
+
+13. Reusability
+14. Modularity - breaking the code down into smaller components, so that it can be reusable, testable.
+15. Testability
+
+16. Performance
+	a. Lazy Loading
+	b. Asset - how do you optimize it
+	c. JS-CSS
+	d. Write optimized code
+	e. Bundler
+	f. CDN Server
+
+17. Styling
+	a. Tailwind CSS
+	b. StyleX - Facebook [new way of writing CSS] 
+	c. MUI/Bootstrap
+	d. Ant UI
+	e. CSS/ SCSS - inline styling
+	f. 
+
+18. Accessiblity
+	a. Performance
+	b. testing
+	c. accessibility
+	d. security
+
+20. Questions from the comment
+	a. what is pure component and pure function.
+
+-------------------------------------------------------------------------------
+
+In a React Frontend L2 round the following question was asked from interviewer.
+
+💠 What security features should be taken while designing API's?
+💠 What is API throttling?
+💠 How to improve the performance in React Application?
+💠 What is debouncing in React?
+💠 What if in a react app we need to develop a feature of auto save the inputs of a form?
+💠 Which react library is used to represent JSON data into charts, graphs, etc for better visualization and performance?
+💠 If you have to inform the backend developers about some API's are failing how will you do that?
+💠 Which tool is used to improve code standards in react application to show warnings for developers?
+💠 What are the unit testing tools used in React Application?
+💠 How do you handle API test case scenarios in React Application?
+💠 Give me a estimation of completing a auto save functionality with unit testing including?
+💠 Which cloud is used in your app development?

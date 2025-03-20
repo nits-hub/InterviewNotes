@@ -1,0 +1,23 @@
+Hooks - 
+    a. Hooks are functions that lets you use state and lifecycle features in functional components without writing the class.
+    b. They allow function based components to have the same features as class components.
+
+    Why use Hooks?
+        a. No need for class components.
+        b. Easier to reuse logic.
+        c. Simpler and cleaner code.
+        d. Better performance (avoids unnecessary re-renders)
+
+    Common Hooks include:
+    1. useState	- Manages state in functional components.
+    2. useEffect - Handles side effects (API calls, event listeners, timers, etc.).
+    3. useContext - Provides access to context API (global state).
+    4. useRef - Creates mutable references (for DOM elements, persisting values).
+    5. useMemo - Optimizes performance by memoizing expensive calculations.
+    6. useCallback - Memoizes callback functions to prevent unnecessary re-renders.
+    7. useReducer - Manages complex state logic, like Redux but within a component.
+
+    
+
+
+
