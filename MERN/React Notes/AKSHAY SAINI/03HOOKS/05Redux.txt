@@ -1,0 +1,115 @@
+5. Redux - 
+    a. Redux is a javascript state management library that helps manage the application's state in a predictable way.
+
+    b. In React, Redux is used for managing global application state by providing a single source of truth(i.e., store).
+
+    The core concepts of redux are:
+    1. Store - Holds the state 
+    2. Actions - Objects that describe what happened.
+    3. Reducers - Functions that determine how the state chages in respone to action.
+
+    Redux flow diagram:
+        Redux follows this cycle:
+            1. Dispatch an action (e.g., dispatch({type: "INCREMENT"})).
+            2. Reducer processes the action & updates the state.
+            3. New state is stored in the Redux Store.
+            4. Components re-render when the state changes.
+
+    1. Install Redux Toolkit & React-Redux
+        npm install @reduxjs/toolkit react-redux
+
+    2. Create store.js (Configure Store)
+        src/redux/store.js
+
+        import { configureStore } from "@reduxjs/toolkit";
+        import counterReducer from "./counterSlice";
+
+        const store = configureStore({
+        reducer: {
+            counter: counterReducer,
+        },
+        });
+
+        export default store;
+
+    3. Create Slice (counterSlice.js)
+        Inside src/redux/counterSlice.js
+
+        import {createSlice} from "@reduxjs/toolkit";
+
+        const initialState = {count: 0};
+
+        const counterSlice = createSlice({
+            name: "counter",
+            initialState,
+            reducers: {
+                increment: (state) => {
+                    state.count += 1;
+                },
+                decrement: (state) => {
+                    state.count -= 1;
+                },
+                reset: (state) => {
+                    state.count = 0;
+                },
+            },
+        });
+
+        export const {increment, decrement, reset} = counterSlice.actions;
+        export default counterSlice.reducer;
+
+        4. Wrap App with Provider
+            Inside src/index.js
+
+            import React from "react";
+            import ReactDOM from "react-dom";
+            import { Provider } from "react-redux";
+            import store from "./redux/store";
+            import App from "./App";
+
+            ReactDOM.render(
+            <Provider store={store}>
+                <App />
+            </Provider>,
+            document.getElementById("root")
+            );
+
+        5. Create Counter Component
+            Inside src/components/Counter.jsx
+
+            import React from "react";
+            import { useSelector, useDispatch } from "react-redux";
+            import { increment, decrement, reset } from "../redux/counterSlice";
+
+            const Counter = () => {
+            const count = useSelector((state) => state.counter.count);
+            const dispatch = useDispatch();
+
+            return (
+                <div>
+                <h2>Count: {count}</h2>
+                <button onClick={() => dispatch(increment())}>+</button>
+                <button onClick={() => dispatch(decrement())}>-</button>
+                <button onClick={() => dispatch(reset())}>Reset</button>
+                </div>
+            );
+            };
+
+            export default Counter;
+
+        6. Use Counter Component in App
+            Inside src/App.jsx
+
+            import React from "react";
+            import Counter from "./components/Counter";
+
+            function App() {
+            return (
+                <div>
+                <h1>Redux Toolkit Counter</h1>
+                <Counter />
+                </div>
+            );
+            }
+
+            export default App;
