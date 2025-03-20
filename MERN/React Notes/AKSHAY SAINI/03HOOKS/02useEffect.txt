@@ -1,20 +1,20 @@
 2. useEffect - 
     a. It is used to perform side effects such as data fetching from an api, dom manipulation; after the component has been rendered.
 
-    syntax: 1.
+    Syntax: 1.
         a. Runs after every render by-default. 
         b. [Similar as componentDidUpdate method of class component].
         useEffect(() => {
             //code 
         });
 
-    syntax: 2.
+    Syntax: 2.
 
         useEffect(() => {
 
         }, [])
 
-    syntax: 3. //Effect runs when count changes.
+    Syntax: 3. //Effect runs when count changes.
         useEffect(() => {
 
         }, [count])

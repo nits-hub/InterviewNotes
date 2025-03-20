@@ -1,4 +1,9 @@
 LifeCycle Methods - 
+        a. In class component, React provides LifeCycle methods that allows you to hook into different phases of a component's life to control the behaviour of a component during its creation, updating, and destruction.
+        b. These method can be grouped into three phases: mounting, updating and unmounting.
+        c. In functional component, similar behaviour can be achieved using hooks like useEffect.
+
+LifeCycle Methods are - 
     1. Mounting Phase (When component is created).
         a. In this phase, the component is created and inserted into the dom. It consists of:
             1. constructor() - Initializes state and binds methods.

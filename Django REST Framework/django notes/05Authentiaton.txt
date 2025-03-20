@@ -10,7 +10,7 @@ AUTHENTICATION -
     Note - 
         1. DRF focuses primarily on authentication, though it can integrate with other mechanisms (like permissions) to handle authorization.
 
-    Authentication Mechanish in DRF - 
+    Authentication Mechanism in DRF - 
         DRF supports several types of authentication. Some of the common ones are:
 
     1. Session Authentication - 

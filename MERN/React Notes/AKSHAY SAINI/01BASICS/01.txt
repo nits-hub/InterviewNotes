@@ -15,7 +15,7 @@ Features of React?
     b. Component Based Architecture - 
         1. React is all about components, it means the UI can be divided into reusable, self-contained pieces called components, and each component can manage its own state and logic.
 
-    c. Virtual DOM - 
+    c. Virtual DOM -
         a. Virtual DOM is a lightweight copy of the actual DOM in memory.
         b. When the state of an application chages, react uses virtual DOM to improve the performance by updating only the changed part of the actual DOM.
 
@@ -221,6 +221,9 @@ D/B State and Props?
         1. Props are read-only data passed from parent component to a child component.
         2. Props are immutable and used for rendering dynamic content.
 
+Props Drilling 
+
+State Liftingup
 
 Reconciliation?
     a. Reconciliation is a process that react uses it to update the DOM efficiently. When the state or props changes react compares new-virtual DOM tree with the previous one, identifies changes, and updates only the changed part of the real DOM.
