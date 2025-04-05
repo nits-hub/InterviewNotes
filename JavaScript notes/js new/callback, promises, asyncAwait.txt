@@ -1,76 +1,167 @@
 Callbacks - 
  1. A callback function is a function passed into another function as an argument. It is executed after some operation is completed, making it essential for handling asynchronous tasks, like fetching data from an API.
 
- e.g.,
+ In short:
+ "A callback is a function called at the completion of another function."
+
+ e.g., synchronous
+    function greetUser(name, callback){
+        console.log("Hello", name);
+        callback()
+    }
+
+    function sayBye() {
+        console.log("Goodbye!")
+    }
+
+    greetUser("Baba", sayBye);
+
+ e.g. 2, asynchronous
     function fetchData(callback) {
-        setTimeout(() => {
-            console.log("Data fetched..");
-            callback();
-        }, 3000)
+        console.log("Fetching data...");
+
+        setTimeout(function() {
+            console.log("Data fetched.");
+            callback("Data from server");
+        }, 2000); // Simulates a 2-second delay
     }
 
-    //callback function definition
-    function processData(){
-        console.log("Processing data..");
+    function handleData(data) {
+        console.log("Handling data:", data);
     }
 
-    fetchData(processData);
+    fetchData(handleData);
 
  Here the processData is a callback function that gets executed after the fetchData completes its task.
+{
+    1. What is the difference between a regular function and a callback?
+    -> A regular function is called directly, while a callback is passed to another function to be called later.
+
+    2. Are callbacks synchronous or asynchronous?
+    -> Callbacks can be both:
+       a. Synchronous if called immediately (like Array.map()).
+       b. Asynchronous when used with operations like setTimeout(), API calls, etc.
+
+    3. What is Callback Hell?
+    -> Callback Hell is a situation in JavaScript where callbacks are nested within other callbacks multiple levels deep. This leads to:
+       a. Code that is hard to read
+       b. Hard to maintain
+       c. Looks like a pyramid or Christmas tree
+
+       e.g.,
+        console.log("start")
+
+        setTimeout(() => {
+            console.log("step 1")
+            
+            setTimeout(() => {
+                console.log("step 2")
+                
+                setTimeout(() => {
+                    console.log("step 3")
+                },1000)
+            
+            },1000)
+        },1000)
+        
+        You can see how the code keeps nesting deeper → this is callback hell.
+
+        *How to avoid callback hell?
+        -> by the use of promise.
+        -> by make use of async/await.
+}
 
 
 Promises - 
  1. A promises is an object that represents the eventual completion or failure of an asynchronous operation. It allows you to chain operations, making the code more readable and manageable compared to callbacks.
 
+ {
+    In simple word, a promise is like a container for future value, something we don't have yet but will get eventually.
+ }
+
  A promise has three states:
- (a) Pending: It is the initial state which indicates that the promise is neither fulfilled nor rejected.
+ (a) Pending: The initial state (operation is still ongoing).
  (b) Fulfilled: The operation is completed successfully.
  (c) Rejected: The operation failed.
 
  e.g., 
-    function fetchData() {
-        return new Promise((resolve, reject) => {
-            setTimeout(()=>{
-                const success = true;   //simulate success or failure
-                if(success)
-                    resolve("Data fetched successfully");
-                else
-                    reject("Error fetching data");
-            },3000);
-        })
+    const fetchdata = () => {
+    console.log("fetching data");
+    const success = false;
+    
+    return new Promise((resolve, reject) => {
+      setTimeout(()=> {
+            if (success)
+                resolve("promise is resolved")
+            else
+                reject("promise is rejected")
+        },1000)  
+      })
     }
 
-    fetchData()
-    .then(data => {
-        console.log("data"); //output: data fetched successfully
+    fetchdata()
+    .then((res) => {
+        console.log(res)
     })
-    .catch(error => {
-        console.log(error);
-    });
+    .catch((error) => {
+        console.log(error)
+    })
 
+    e.g., Realworld example
+    {
+        function fetchRecipes() {
+        return fetch("https://dummyjson.com/recipes?limit=50")
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json()
+        })
+        .then(data => {
+            console.log("Fetched recipes:", data.recipes);
+            return data.recipes;
+        })
+        .catch((error) => {
+            console.error("Failed to fetch recipes:", error);
+        })
+        }
+    }
+
+    {
+        3. What are .then() and .catch()?
+        -> .then() is called when the promise is resolved (fulfilled).
+        -> .catch() is called when the promise is rejected (failed).
+
+        4. How are Promises better than callbacks?
+        -> Avoid nested structure (callback hell).
+        -> Chaining is easier.
+        -> Error handling is cleaner with .catch().
+
+        6. What is Promise.all()?
+        -> Promise.all() runs multiple promises in parallel and waits for all of them to finish.
+    }
+
+javascript
+Copy
+Edit
+Promise.all([promise1, promise2, promise3])
+  .then(results => console.log(results))
+  .catch(error => console.log(error));
+    }
+    
 Async/ Await - 
  Async/ Await is built on top of Promises, making Asynchronous code look and behave more like Synchronous code.
- 'async' is used to declare an asynchronous function, and 
+ 'async' is used to declare an asynchronous function that returns a promise, and 
  'await' is used to pause execution until the Promise is resolved/rejected.
 
  e.g., 
- async function fetchData(){
-    return new Promise((resolve, reject) => {
-        setTimeout(()=> {
-            const success = true;
-            if(success)
-                resolve("Data fetched..");
-            else
-                reject("Error fetching data..");
-        },3000);
-    });
- }
-
- async function processData(){
+ const fetchRecipe = async () => {
     try{
-        const data = await fetchData();
-        console.log(data);
+        const response = await axios.get("https://dummyjson.com/recipes")
+        console.log("recipes fetched: ", response.data)
     } catch(error) {
-        console.log(error);
+        console.log(error)
     }
  }
+
+fetchRecipe();

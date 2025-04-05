@@ -1,0 +1,62 @@
+A. fetch - 
+
+    1. example with fetch:
+
+        fetch("https://dummyjson.com/recipes")
+        .then(res => {
+            if (!res.ok) throw new Error("HTTP error!");
+            return res.json();
+        })
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+
+    2. using post request:
+    fetch("https://dummyjson.com/recipes", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+            name: "New Recipe",
+            ingredients: ["Egg", "Salt"]
+        })
+        })
+
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.error(err));
+    
+
+
+B. axios - (popular external library) :
+
+    1.  example using promises:
+
+        import axios from "axios";
+        axios.get("https://dummyjson.com/recipes")
+        .then(response => console.log(response.data))
+        .catch(error => console.error(error));
+
+    2. using post request;
+        axios.post("https://dummyjson.com/recipes", {
+        name: "New Recipe",
+        ingredients: ["Egg", "Salt"]
+        })
+        
+        .then(res => console.log(res.data))
+        .catch(err => console.error(err));
+
+d/b 
+s.no.                       fetch                               axios 
+1. Built-in                 fetch is a built-in library         axios is an external library 
+2. Promise-based            Yes                                 Yes
+3. Automatic json parsing   you must call .json() manually      Automatic parse response data 
+4. Error handling           Only rejects on network failure,    Rejects on HTTP Errors(e.g., 404, 500).
+                            not HTTP errors
+
+
+Summary:
+Use **fetch()** for small/lightweight requests with native support.
+
+Use **axios** when you need extra features, cleaner syntax, and better error handling/interceptors — especially in React or large apps.
